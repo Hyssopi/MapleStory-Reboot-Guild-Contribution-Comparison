@@ -242,8 +242,8 @@ function generateSeries(guildData)
         marker:
         {
           symbol: 'url(' + guildData.guilds[i].symbolUrl + ')',
-          width: 20,
-          height: 20
+          width: 22,
+          height: 22
         },
         data: []
       }
