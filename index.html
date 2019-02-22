@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <script src="lib/moment.js"></script>
+  <script src="lib/chroma.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link href="styles/styles.css" rel="stylesheet"/>
+  
+  <head>
+    <meta charset="UTF-8">
+    <title>Guild Contribution Comparison</title>
+  </head>
+  
+  <body>
+    <div class="tab">
+      <button class="tabLinks" onclick="openTab(event, 'guildContributionGraphId')">Contribution Graph</button>
+      <button class="tabLinks" onclick="openTab(event, 'guildSummaryBlockId')">Summary</button>
+      <button class="tabLinks" onclick="openTab(event, 'guildDataTableId')">Data Table</button>
+      <button class="tabLinks" onclick="openTab(event, 'guildAboutId')">About</button>
+    </div>
+    
+    <div id="guildContributionGraphId" class="tabContent" style="display: block">
+      <div id="guildContributionGraphHtmlWrapper"></div>
+    </div>
+    
+    <div id="guildSummaryBlockId" class="tabContent" style="display: none">
+      <div id="guildSummaryBlockHtmlWrapper"></div>
+    </div>
+    
+    <div id="guildDataTableId" class="tabContent" style="display: none">
+      <div id="guildDataTableHtmlWrapper"></div>
+    </div>
+    
+    <div id="guildAboutId" class="tabContent" style="display: none">
+      <div id="guildAboutHtmlWrapper"></div>
+    </div>
+  </body>
+  
+  <script src="src/main.js" type="module"></script>
+  <script>
+    function openTab(event, tabId)
+    {
+      let tabContent, tabLinks;
+      tabContent = document.getElementsByClassName('tabContent');
+      for (let i = 0; i < tabContent.length; i++)
+      {
+        tabContent[i].style.display = 'none';
+      }
+      tabLinks = document.getElementsByClassName('tabLinks');
+      for (let i = 0; i < tabLinks.length; i++)
+      {
+        tabLinks[i].className = tabLinks[i].className.replace(' active', '');
+      }
+      document.getElementById(tabId).style.display = 'block';
+      event.currentTarget.className += ' active';
+    }
+  </script>
+</html>
