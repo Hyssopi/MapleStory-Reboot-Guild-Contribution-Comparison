@@ -63,7 +63,7 @@ let time =
 
 let title =
 {
-  text: 'Top Reboot Guilds Contribution Comparison',
+  text: 'Top Reboot Guild Contribution Comparison',
   style:
   {
     color: '#000000',
