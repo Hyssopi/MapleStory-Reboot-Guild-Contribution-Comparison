@@ -8,7 +8,7 @@ export default function()
 {
   return `
     <div style="margin: 20px 0px 0px 10px; line-height: 2; font-size: 26px;">
-      <div>* <span style="font-weight: bold;">GitHub Pages</span> link: <a href="https://hyssopi.github.io/Guild-Contribution-Comparison/">https://hyssopi.github.io/Guild-Contribution-Comparison/</a></div>
+      <div>* <span style="font-weight: bold;">GitHub Pages</span> link: <a href="https://hyssopi.github.io/MapleStory-Reboot-Guild-Contribution-Comparison/">https://hyssopi.github.io/MapleStory-Reboot-Guild-Contribution-Comparison/</a></div>
       <div>* Guild data entries update at least <span style="font-style: italic;">weekly</span>.</div>
       <div>* Right click webpage -> Inspect -> Console, to view debug information.</div>
       <div>* <span style="font-weight: bold;">Summary - Trends</span> are estimates based on roughly the most recent month averages. Guild members with high contribution that leave or get expelled may temporarily affect the averages. These statistics are just for fun and not to be taken too seriously.</div>

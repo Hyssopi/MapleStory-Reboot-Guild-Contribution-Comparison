@@ -1,3 +1,3 @@
 # GitHub Pages
 
-https://hyssopi.github.io/Guild-Contribution-Comparison/
+https://hyssopi.github.io/MapleStory-Reboot-Guild-Contribution-Comparison/
