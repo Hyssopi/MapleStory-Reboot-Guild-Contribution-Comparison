@@ -7,9 +7,10 @@ import * as guildUtilities from '../util/guildUtilities.js';
  * Generates HTML for guild data table using guildData.
  *
  * @param guildData Contains all the guild data and data entries
+ * @param isChronologicalOrder Order of the guild data rows in either: ascending order/oldest first (chronological order) or descending order/newest first (reverse chronological order)
  * @return HTML code to generate guild data table
  */
-export default function(guildData)
+export default function(guildData, isChronologicalOrder)
 {
   let html = '';
   
@@ -33,9 +34,24 @@ export default function(guildData)
     colorScales.push(colorScale);
   }
   
+  let tableRowHtmls = [];
   for (let loopDate = moment(earliestEntryDate); loopDate.isSameOrBefore(latestEntryDate); loopDate.add(1, 'days'))
   {
-    html += generateTableRow(loopDate, guildData.guilds, guildData.dayEntries, previousValidGuildContributionDates, previousValidGuildMemberCountDates, colorScales);
+    tableRowHtmls.push(generateTableRow(loopDate, guildData.guilds, guildData.dayEntries, previousValidGuildContributionDates, previousValidGuildMemberCountDates, colorScales));
+  }
+  if (isChronologicalOrder)
+  {
+    for (let i = 0; i < tableRowHtmls.length; i++)
+    {
+      html += tableRowHtmls[i];
+    }
+  }
+  else
+  {
+    for (let i = tableRowHtmls.length - 1; i >= 0; i--)
+    {
+      html += tableRowHtmls[i];
+    }
   }
   
   html += generateTableFooter(guildData.guilds);
