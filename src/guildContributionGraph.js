@@ -43,7 +43,7 @@ let chart =
         color: '#000000',
         fontWeight: 'normal',
         fontSize: '22px',
-        fontFamily: 'Roboto, sans-serif'
+        fontFamily: 'Arial, Liberation Sans'
       }
     }
   },
@@ -69,7 +69,7 @@ let title =
     color: '#000000',
     fontWeight: 'normal',
     fontSize: '26px',
-    fontFamily: 'Roboto, sans-serif'
+    fontFamily: 'Arial, Liberation Sans'
   }
 }
 
@@ -86,7 +86,7 @@ let legend =
     color: '#000000',
     fontWeight: 'normal',
     fontSize: '18px',
-    fontFamily: 'Roboto, sans-serif'
+    fontFamily: 'Arial, Liberation Sans'
   },
   itemHoverStyle:
   {
@@ -113,7 +113,7 @@ let xAxis =
       color: '#000000',
       fontWeight: 'normal',
       fontSize: '14px',
-      fontFamily: 'Roboto, sans-serif'
+      fontFamily: 'Arial, Liberation Sans'
     },
     overflow: 'justify'
   },
@@ -144,7 +144,7 @@ let yAxis =
       color: '#000000',
       fontWeight: 'normal',
       fontSize: '14px',
-      fontFamily: 'Roboto, sans-serif'
+      fontFamily: 'Arial, Liberation Sans'
     },
     overflow: 'justify'
   },
@@ -156,7 +156,7 @@ let yAxis =
       color: '#000000',
       fontWeight: 'bold',
       fontSize: '16px',
-      fontFamily: 'Roboto, sans-serif'
+      fontFamily: 'Arial, Liberation Sans'
     }
   }
 }
@@ -173,7 +173,7 @@ let subtitle =
     color: '#000000',
     fontWeight: 'normal',
     fontSize: '12px',
-    fontFamily: 'Roboto, sans-serif'
+    fontFamily: 'Arial, Liberation Sans'
   },
   align: 'left',
   verticalAlign: 'top',
@@ -290,13 +290,13 @@ function generateSeries(guildData)
 /**
  * Extracts data from guildData and draws the chart to the HTML container ID.
  *
- * @param containerId HTML ID to draw chart at
+ * @param chartHtmlContainerId HTML ID to draw chart at
  * @param guildData Contains all the guild data and data entries
  */
-export function drawGraph(containerId, guildData)
+export function drawGraph(chartHtmlContainerId, guildData)
 {
   let series = generateSeries(guildData);
-  let graphChart = Highcharts.chart(containerId,
+  let graphChart = Highcharts.chart(chartHtmlContainerId,
   {
     chart: chart,
     credits: credits,

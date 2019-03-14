@@ -44,10 +44,10 @@ fetch(GUILD_DATA_JSON_PATH)
 function setupTabs(guildData)
 {
   // Guild Contribution Graph
-  let chartContainerId = 'chartContainer';
-  let guildContributionGraphHtml = '<div id=' + chartContainerId + ' style="width: 99%; height: 90%; position: absolute;"></div>';
+  let chartHtmlContainerId = 'chartContainer';
+  let guildContributionGraphHtml = '<div id=' + chartHtmlContainerId + ' style="width: 99%; height: 90%; position: absolute;"></div>';
   document.getElementById("guildContributionGraphHtmlWrapper").innerHTML = guildContributionGraphHtml;
-  drawGraph(chartContainerId, guildData);
+  drawGraph(chartHtmlContainerId, guildData);
   
   // Guild Summary Block
   let guildSummaryBlockHtml = guildSummaryBlock(guildData);
