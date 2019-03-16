@@ -5,55 +5,55 @@
       "name": "Eternal",
       "color": "#FF2222",
       "backgroundColor": "#FF936C",
-      "symbolUrl": "images/eternalIcon.png"
+      "symbolUrl": "images/icons/eternalIcon.png"
     },
     {
       "name": "Smile",
       "color": "#626262",
       "backgroundColor": "#EFEFEF",
-      "symbolUrl": "images/smileIcon.png"
+      "symbolUrl": "images/icons/smileIcon.png"
     },
     {
       "name": "Elite",
       "color": "#FFBB22",
       "backgroundColor": "#FFFFB5",
-      "symbolUrl": "images/eliteIcon.png"
+      "symbolUrl": "images/icons/eliteIcon.png"
     },
     {
       "name": "Savages",
       "color": "#FF8800",
       "backgroundColor": "#FFCD76",
-      "symbolUrl": "images/savagesIcon.png"
+      "symbolUrl": "images/icons/savagesIcon.png"
     },
     {
       "name": "Spring",
       "color": "#77DD11",
       "backgroundColor": "#C0FA8E",
-      "symbolUrl": "images/springIcon.png"
+      "symbolUrl": "images/icons/springIcon.png"
     },
     {
       "name": "Bounce",
       "color": "#43864E",
       "backgroundColor": "#91D798",
-      "symbolUrl": "images/bounceIcon.png"
+      "symbolUrl": "images/icons/bounceIcon.png"
     },
     {
       "name": "Sunset",
       "color": "#BB8800",
       "backgroundColor": "#FFEE22",
-      "symbolUrl": "images/sunsetIcon.png"
+      "symbolUrl": "images/icons/sunsetIcon.png"
     },
     {
       "name": "Beaters",
       "color": "#0088BB",
       "backgroundColor": "#55D2FF",
-      "symbolUrl": "images/beatersIcon.png"
+      "symbolUrl": "images/icons/beatersIcon.png"
     },
     {
       "name": "Downtime",
       "color": "#990000",
       "backgroundColor": "#FF7777",
-      "symbolUrl": "images/downtimeIcon.png"
+      "symbolUrl": "images/icons/downtimeIcon.png"
     }
   ],
   "dayEntries":

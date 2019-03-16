@@ -43,7 +43,7 @@ let chart =
         color: '#000000',
         fontWeight: 'normal',
         fontSize: '22px',
-        fontFamily: 'Arial, Liberation Sans'
+        fontFamily: 'Arial, Liberation Sans, sans-serif'
       }
     }
   },
@@ -69,7 +69,7 @@ let title =
     color: '#000000',
     fontWeight: 'normal',
     fontSize: '26px',
-    fontFamily: 'Arial, Liberation Sans'
+    fontFamily: 'Arial, Liberation Sans, sans-serif'
   }
 }
 
@@ -86,7 +86,7 @@ let legend =
     color: '#000000',
     fontWeight: 'normal',
     fontSize: '18px',
-    fontFamily: 'Arial, Liberation Sans'
+    fontFamily: 'Arial, Liberation Sans, sans-serif'
   },
   itemHoverStyle:
   {
@@ -113,7 +113,7 @@ let xAxis =
       color: '#000000',
       fontWeight: 'normal',
       fontSize: '14px',
-      fontFamily: 'Arial, Liberation Sans'
+      fontFamily: 'Arial, Liberation Sans, sans-serif'
     },
     overflow: 'justify'
   },
@@ -144,7 +144,7 @@ let yAxis =
       color: '#000000',
       fontWeight: 'normal',
       fontSize: '14px',
-      fontFamily: 'Arial, Liberation Sans'
+      fontFamily: 'Arial, Liberation Sans, sans-serif'
     },
     overflow: 'justify'
   },
@@ -156,7 +156,7 @@ let yAxis =
       color: '#000000',
       fontWeight: 'bold',
       fontSize: '16px',
-      fontFamily: 'Arial, Liberation Sans'
+      fontFamily: 'Arial, Liberation Sans, sans-serif'
     }
   }
 }
@@ -173,7 +173,7 @@ let subtitle =
     color: '#000000',
     fontWeight: 'normal',
     fontSize: '12px',
-    fontFamily: 'Arial, Liberation Sans'
+    fontFamily: 'Arial, Liberation Sans, sans-serif'
   },
   align: 'left',
   verticalAlign: 'top',
