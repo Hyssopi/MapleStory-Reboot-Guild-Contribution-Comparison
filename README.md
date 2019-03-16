@@ -13,7 +13,7 @@ https://hyssopi.github.io/MapleStory-Reboot-Guild-Contribution-Comparison/
 (None)
 
 ## Run
-Open `index.html` in web browser.
+Open `index.html` in a web browser.
 
 ## Test
 (None)
