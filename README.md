@@ -7,13 +7,13 @@ Visualization and comparison of the top MapleStory Reboot Guilds. Compares guild
 https://hyssopi.github.io/MapleStory-Reboot-Guild-Contribution-Comparison/
 
 ## Prerequisites
-None.
+(None)
 
 ## Build
-None.
+(None)
 
 ## Run
-- Open `index.html` in web browser.
+Open `index.html` in web browser.
 
 ## Test
-None.
+(None)
