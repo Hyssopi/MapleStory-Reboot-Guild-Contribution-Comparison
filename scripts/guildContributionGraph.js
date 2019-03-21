@@ -117,7 +117,7 @@ let xAxis =
     },
     overflow: 'justify'
   },
-  tickPixelInterval: 150,
+  tickPixelInterval: 200,
   title:
   {
     text: null
