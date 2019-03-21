@@ -4,76 +4,13 @@ import * as guildUtilities from '../util/guildUtilities.js';
 
 
 /**
- * Generates HTML for guild summary block using guildData.
+ * Generates HTML for guild summary block using guildSummaryResults.
  *
- * @param guildData Contains all the guild data and data entries
+ * @param guildSummaryResults Contains processed guild data
  * @return HTML code to generate guild summary block
  */
-export default function(guildData)
+export default function(guildSummaryResults)
 {
-  let latestEntryDate = guildUtilities.findLatestEntryDate(guildData.dayEntries);
-  let guildSummaryResults = [];
-  for (let i = 0; i < guildData.guilds.length; i++)
-  {
-    console.info('Calculating average for ' + guildData.guilds[i].name + '...');
-    
-    let latestValidEntryDate = guildUtilities.findLatestValidContributionEntryDate(guildData.dayEntries, guildData.guilds[i].name);
-    let latestValidContribution = guildUtilities.findGuildEntryByDate(guildData.dayEntries, latestValidEntryDate, guildData.guilds[i].name).contribution;
-    
-    let earlierMonthValidEntryDate = guildUtilities.findEarlierMonthValidEntryDate(latestEntryDate, guildData.dayEntries, guildData.guilds[i].name);
-    if (!earlierMonthValidEntryDate)
-    {
-      console.log('earlierMonthValidEntryDate is null for ' + guildData.guilds[i].name + ', setting it to latestValidEntryDate so it will be caught later as invalid average calculation');
-      earlierMonthValidEntryDate = moment(latestValidEntryDate);
-    }
-    let earlierMonthValidContribution = guildUtilities.findGuildEntryByDate(guildData.dayEntries, earlierMonthValidEntryDate, guildData.guilds[i].name).contribution;
-    
-    let averagePerDay = (latestValidContribution - earlierMonthValidContribution) / latestValidEntryDate.diff(earlierMonthValidEntryDate, 'days');
-    if (moment.duration(latestEntryDate.diff(earlierMonthValidEntryDate)) > moment.duration(5, 'weeks'))
-    {
-      console.log('averagePerDay date ranges are too far. latestEntryDate: ' + utilities.getFormattedDate(latestEntryDate) + ', earlierMonthValidEntryDate: ' + utilities.getFormattedDate(earlierMonthValidEntryDate));
-      averagePerDay = '-';
-    }
-    else if (moment.duration(latestValidEntryDate.diff(earlierMonthValidEntryDate)) < moment.duration(2, 'weeks'))
-    {
-      console.log('averagePerDay date ranges are too close. latestValidEntryDate: ' + utilities.getFormattedDate(latestValidEntryDate) + ', earlierMonthValidEntryDate: ' + utilities.getFormattedDate(earlierMonthValidEntryDate));
-      averagePerDay = '-';
-    }
-    
-    let guildSummaryResult =
-    {
-      guildName: guildData.guilds[i].name,
-      guildColor: guildData.guilds[i].color,
-      guildSymbolUrl: guildData.guilds[i].symbolUrl,
-      latestValidEntryDate: latestValidEntryDate,
-      latestValidContribution: latestValidContribution,
-      earlierMonthValidEntryDate: earlierMonthValidEntryDate,
-      earlierMonthValidContribution: earlierMonthValidContribution,
-      averagePerDay: averagePerDay
-    }
-    guildSummaryResults.push(guildSummaryResult);
-  }
-  
-  guildSummaryResults.sort(function(a, b){return b.latestValidContribution - a.latestValidContribution;});
-  
-  for (let i = 0; i < guildSummaryResults.length; i++)
-  {
-    let guildSummaryResult = guildSummaryResults[i];
-    console.table(
-    {
-      guildName: guildSummaryResult.guildName,
-      guildColor: guildSummaryResult.guildColor,
-      guildSymbolUrl: guildSummaryResult.guildSymbolUrl,
-      latestValidEntryDate: utilities.getFormattedDate(guildSummaryResult.latestValidEntryDate),
-      latestValidContribution: utilities.thousandsCommaFormatNumber(guildSummaryResult.latestValidContribution),
-      earlierMonthValidEntryDate: utilities.getFormattedDate(guildSummaryResult.earlierMonthValidEntryDate),
-      earlierMonthValidContribution: utilities.thousandsCommaFormatNumber(guildSummaryResult.earlierMonthValidContribution),
-      averagePerDay: utilities.thousandsCommaFormatNumber(guildSummaryResult.averagePerDay)
-    });
-  }
-  console.log('guildSummaryResults:');
-  console.log(guildSummaryResults);
-  
   let html = '';
   html += generateGuildLatestHtmlBlock(guildSummaryResults);
   html += '<hr>';

@@ -217,6 +217,82 @@ export function findHighestContributionAmount(dayEntries, guildName)
 }
 
 /**
+ * Calculate and return processed guild data packaged as a neat object.
+ *
+ * @param guildData Contains all the guild data and data entries
+ * @return Processed guild data
+ */
+export function getGuildSummaryResults(guildData)
+{
+  let latestEntryDate = findLatestEntryDate(guildData.dayEntries);
+  let guildSummaryResults = [];
+  for (let i = 0; i < guildData.guilds.length; i++)
+  {
+    console.info('Calculating average for ' + guildData.guilds[i].name + '...');
+    
+    let latestValidEntryDate = findLatestValidContributionEntryDate(guildData.dayEntries, guildData.guilds[i].name);
+    let latestValidContribution = findGuildEntryByDate(guildData.dayEntries, latestValidEntryDate, guildData.guilds[i].name).contribution;
+    
+    let earlierMonthValidEntryDate = findEarlierMonthValidEntryDate(latestEntryDate, guildData.dayEntries, guildData.guilds[i].name);
+    if (!earlierMonthValidEntryDate)
+    {
+      console.log('earlierMonthValidEntryDate is null for ' + guildData.guilds[i].name + ', setting it to latestValidEntryDate so it will be caught later as invalid average calculation');
+      earlierMonthValidEntryDate = moment(latestValidEntryDate);
+    }
+    let earlierMonthValidContribution = findGuildEntryByDate(guildData.dayEntries, earlierMonthValidEntryDate, guildData.guilds[i].name).contribution;
+    
+    let averagePerDay = (latestValidContribution - earlierMonthValidContribution) / latestValidEntryDate.diff(earlierMonthValidEntryDate, 'days');
+    if (moment.duration(latestEntryDate.diff(earlierMonthValidEntryDate)) > moment.duration(5, 'weeks'))
+    {
+      console.log('averagePerDay date ranges are too far. latestEntryDate: ' + utilities.getFormattedDate(latestEntryDate) + ', earlierMonthValidEntryDate: ' + utilities.getFormattedDate(earlierMonthValidEntryDate));
+      averagePerDay = '-';
+    }
+    else if (moment.duration(latestValidEntryDate.diff(earlierMonthValidEntryDate)) < moment.duration(2, 'weeks'))
+    {
+      console.log('averagePerDay date ranges are too close. latestValidEntryDate: ' + utilities.getFormattedDate(latestValidEntryDate) + ', earlierMonthValidEntryDate: ' + utilities.getFormattedDate(earlierMonthValidEntryDate));
+      averagePerDay = '-';
+    }
+    
+    let guildSummaryResult =
+    {
+      guildName: guildData.guilds[i].name,
+      guildColor: guildData.guilds[i].color,
+      guildBackgroundColor: guildData.guilds[i].backgroundColor,
+      guildSymbolUrl: guildData.guilds[i].symbolUrl,
+      latestValidEntryDate: latestValidEntryDate,
+      latestValidContribution: latestValidContribution,
+      earlierMonthValidEntryDate: earlierMonthValidEntryDate,
+      earlierMonthValidContribution: earlierMonthValidContribution,
+      averagePerDay: averagePerDay
+    }
+    guildSummaryResults.push(guildSummaryResult);
+  }
+  
+  guildSummaryResults.sort(function(a, b){return b.latestValidContribution - a.latestValidContribution;});
+  
+  for (let i = 0; i < guildSummaryResults.length; i++)
+  {
+    let guildSummaryResult = guildSummaryResults[i];
+    console.table(
+    {
+      guildName: guildSummaryResult.guildName,
+      guildColor: guildSummaryResult.guildColor,
+      guildBackgroundColor: guildSummaryResult.guildBackgroundColor,
+      guildSymbolUrl: guildSummaryResult.guildSymbolUrl,
+      latestValidEntryDate: utilities.getFormattedDate(guildSummaryResult.latestValidEntryDate),
+      latestValidContribution: utilities.thousandsCommaFormatNumber(guildSummaryResult.latestValidContribution),
+      earlierMonthValidEntryDate: utilities.getFormattedDate(guildSummaryResult.earlierMonthValidEntryDate),
+      earlierMonthValidContribution: utilities.thousandsCommaFormatNumber(guildSummaryResult.earlierMonthValidContribution),
+      averagePerDay: utilities.thousandsCommaFormatNumber(guildSummaryResult.averagePerDay)
+    });
+  }
+  console.log('guildSummaryResults:');
+  console.log(guildSummaryResults);
+  
+  return guildSummaryResults;
+}
+
+/**
  * Print debug statements regarding guildData.
  *
  * @param guildData Contains all the guild data and data entries
