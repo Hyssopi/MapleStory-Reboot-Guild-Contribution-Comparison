@@ -49,7 +49,7 @@ function setupTabs(guildData)
   document.getElementById("guildContributionGraphHtmlWrapper").innerHTML = guildContributionGraphHtml;
   drawGraph(chartHtmlContainerId, guildData);
   
-  let guildSummaryResults = guildUtilities.getGuildSummaryResults(guildData);
+  let guildSummaryResults = guildUtilities.calculateGuildSummaryResults(guildData);
   
   // Guild Summary Block
   let guildSummaryBlockHtml = guildSummaryBlock(guildSummaryResults);

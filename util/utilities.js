@@ -53,9 +53,9 @@ export function getFormattedDate(date)
 }
 
 /**
- * Get the difference duration of two dates in "X years, Y months, Z days" format.
+ * Get the difference duration of two dates in "X years, Y months, Z days" format. date1 must be after date2.
  *
- * @param date1 Moment date
+ * @param date1 Moment date, must be after date2
  * @param date2 Moment date to difference
  * @return String text difference duration of two dates in "X years, Y months, Z days" format
  */
@@ -69,16 +69,22 @@ export function getFormattedDateDifferenceDuration(date1, date2)
   {
     formattedDateDifferenceText += dateDifferenceDuration.years() + ' ';
     formattedDateDifferenceText += (dateDifferenceDuration.years() === 1) ? 'year' : 'years';
-    formattedDateDifferenceText += ', ';
   }
   if (dateDifferenceDuration.months() > 0)
   {
+    if (formattedDateDifferenceText)
+    {
+      formattedDateDifferenceText += ', ';
+    }
     formattedDateDifferenceText += dateDifferenceDuration.months() + ' ';
     formattedDateDifferenceText += (dateDifferenceDuration.months() === 1) ? 'month' : 'months';
-    formattedDateDifferenceText += ', ';
   }
   if (dateDifferenceDuration.days() > 0)
   {
+    if (formattedDateDifferenceText)
+    {
+      formattedDateDifferenceText += ', ';
+    }
     formattedDateDifferenceText += dateDifferenceDuration.days() + ' ';
     formattedDateDifferenceText += (dateDifferenceDuration.days() === 1) ? 'day' : 'days';
   }
@@ -88,6 +94,16 @@ export function getFormattedDateDifferenceDuration(date1, date2)
   }
   
   return formattedDateDifferenceText;
+}
+
+/**
+ * Get current date in UTC as Moment date
+ *
+ * @return Current date in UTC as Moment date
+ */
+export function getMomentCurrentDateUTC()
+{
+  return moment().utc();
 }
 
 /**
@@ -220,4 +236,37 @@ export function calculateAverageColor(colors)
   colorBlueSum /= colors.length;
   colorAlphaSum /= colors.length;
   return 'rgba(' + colorRedSum + ', ' + colorGreenSum + ', ' + colorBlueSum + ', ' + colorAlphaSum + ')';
+}
+
+/**
+ * Get resulting string from replacing string at index with a substring.
+ *
+ * @param input Input string to based off
+ * @param index Index of input string to begin replacing
+ * @param replacement Substring used to replace
+ * @return String resulted from replacing input string with substring at index
+ */
+export function stringReplaceAt(input, index, replacement)
+{
+  return input.substring(0, index) + replacement + input.substring(index + replacement.length);
+}
+
+/**
+ * Get window width in pixel.
+ *
+ * @return Window width in pixel
+ */
+export function getWindowWidth()
+{
+  return isNaN(window.innerWidth) ? window.clientWidth : window.innerWidth;
+}
+
+/**
+ * Get window height in pixel.
+ *
+ * @return Window height in pixel
+ */
+export function getWindowHeight()
+{
+  return isNaN(window.innerHeight) ? window.clientHeight : window.innerHeight;
 }

@@ -18,12 +18,6 @@ export default function(guildData, isChronologicalOrder)
   
   html += generateTableHeader(guildData.guilds);
   
-  let earliestEntryDate = guildUtilities.findEarliestEntryDate(guildData.dayEntries);
-  let latestEntryDate = guildUtilities.findLatestEntryDate(guildData.dayEntries);
-  
-  let previousValidGuildContributionDates = [];
-  let previousValidGuildMemberCountDates = [];
-  
   // Creating color range for a specific guild based on its total lowest and highest contribution.
   let colorScales = [];
   for (let i = 0; i < guildData.guilds.length; i++)
@@ -35,9 +29,11 @@ export default function(guildData, isChronologicalOrder)
   }
   
   let tableRowHtmls = [];
-  for (let loopDate = moment(earliestEntryDate); loopDate.isSameOrBefore(latestEntryDate); loopDate.add(1, 'days'))
+  let guildDataTableRows = guildUtilities.calculateGuildDataTableRows(guildData.guilds, guildData.dayEntries);
+  // guildDataTableRows should already be sorted in chronological order
+  for (let i = 0; i < guildDataTableRows.length; i++)
   {
-    tableRowHtmls.push(generateTableRow(loopDate, guildData.guilds, guildData.dayEntries, previousValidGuildContributionDates, previousValidGuildMemberCountDates, colorScales));
+    tableRowHtmls.push(generateTableRow(guildDataTableRows[i].date, guildDataTableRows[i].guilds, colorScales));
   }
   if (isChronologicalOrder)
   {
@@ -100,45 +96,19 @@ function generateTableHeader(guilds)
  * Generates HTML for guild data table row which contains the date and all guild entries for that date.
  *
  * @param date Date for this particular row
- * @param guilds Contents of the guilds from guildData
- * @param dayEntries List of entries by days, each day entry containing all the guilds and its data for that day
- * @param previousValidGuildContributionDates Array of the previous valid guild contribution dates, each index specifies a different guild in the same order as guilds parameter
- * @param previousValidGuildMemberCountDates Array of the previous valid guild member count dates, each index specifies a different guild in the same order as guilds parameter
+ * @param guilds Contents of the guilds from guildDataTableRows
  * @param colorScales Chroma colorscale ranges, each index specifies a different guild in the same order as guilds parameter
  * @return HTML code to generate guild data table row
  */
-function generateTableRow(date, guilds, dayEntries, previousValidGuildContributionDates, previousValidGuildMemberCountDates, colorScales)
+function generateTableRow(date, guilds, colorScales)
 {
   let dateRowContentHtml = '';
-  
-  let guildEntries = guildUtilities.findGuildEntriesByDate(dayEntries, date);
   for (let i = 0; i < guilds.length; i++)
   {
-    let guildEntry = guildUtilities.findGuildEntry(guildEntries, guilds[i].name);
-    
-    let contribution = (guildEntry && guildEntry.contribution) ? guildEntry.contribution : '-';
-    let memberCount = (guildEntry && guildEntry.memberCount) ? guildEntry.memberCount : '-';
-    
-    // Find the averaged contribution given the contribution of the current given date and the previous valid contribution.
-    let averagedContributionDifferenceFromLastEntry = '-';
-    if (utilities.isNumeric(contribution))
-    {
-      if (previousValidGuildContributionDates[i])
-      {
-        averagedContributionDifferenceFromLastEntry = (contribution - guildUtilities.findGuildEntryByDate(dayEntries, previousValidGuildContributionDates[i], guilds[i].name).contribution) / date.diff(previousValidGuildContributionDates[i], 'days');
-      }
-      previousValidGuildContributionDates[i] = moment(date);
-    }
-    
-    let memberCountDifferenceFromLastEntry = '-';
-    if (utilities.isNumeric(memberCount))
-    {
-      if (previousValidGuildMemberCountDates[i])
-      {
-        memberCountDifferenceFromLastEntry = memberCount - guildUtilities.findGuildEntryByDate(dayEntries, previousValidGuildMemberCountDates[i], guilds[i].name).memberCount;
-      }
-      previousValidGuildMemberCountDates[i] = moment(date);
-    }
+    let contribution = guilds[i].contribution;
+    let contributionDifferenceFromLastEntryAveraged = guilds[i].contributionDifferenceFromLastEntryAveraged;
+    let memberCount = guilds[i].memberCount;
+    let memberCountDifferenceFromLastEntry = guilds[i].memberCountDifferenceFromLastEntry;
     
     let contributionBackgroundColor = utilities.isNumeric(contribution) ? colorScales[i](contribution).hex() : guilds[i].backgroundColor;
     
@@ -158,7 +128,7 @@ function generateTableRow(date, guilds, dayEntries, previousValidGuildContributi
     
     dateRowContentHtml += `
       <td nowrap style="text-align: end; background-color: ${contributionBackgroundColor}; font-size: 12px;">${utilities.thousandsCommaFormatNumber(contribution)}</td>
-      <td nowrap style="text-align: end; background-color: ${guilds[i].backgroundColor}; font-size: 12px;">${utilities.isNumeric(averagedContributionDifferenceFromLastEntry) ? utilities.thousandsCommaFormatNumber(Math.floor(averagedContributionDifferenceFromLastEntry)) : '-'}</td>
+      <td nowrap style="text-align: end; background-color: ${guilds[i].backgroundColor}; font-size: 12px;">${utilities.isNumeric(contributionDifferenceFromLastEntryAveraged) ? utilities.thousandsCommaFormatNumber(Math.floor(contributionDifferenceFromLastEntryAveraged)) : '-'}</td>
       <td nowrap style="text-align: center; background-color: ${guilds[i].backgroundColor}; font-size: 12px;">${memberCountDifferenceFromLastEntryIconHtml} ${memberCount}</td>
     `;
   }
