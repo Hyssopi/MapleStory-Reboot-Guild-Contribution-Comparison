@@ -4,32 +4,34 @@ import * as guildUtilities from '../util/guildUtilities.js';
 
 
 /**
- * Generates HTML for guild data table using guildData.
+ * Generates HTML for guild data table using guildDataReference.
  *
- * @param guildData Contains all the guild data and data entries
+ * @param guildDataReference Guild data processed and packaged as a map
  * @param isChronologicalOrder Order of the guild data rows in either: ascending order/oldest first (chronological order) or descending order/newest first (reverse chronological order)
  * @return HTML code to generate guild data table
  */
-export default function(guildData, isChronologicalOrder)
+export default function(guildDataReference, isChronologicalOrder)
 {
   let html = '';
   
   html += '<table align="center" class="hoverRowHighlight" style="border-collapse: collapse;">';
   
-  html += generateTableHeader(guildData.guilds);
+  let guilds = guildUtilities.getGuilds(guildDataReference);
+  
+  html += generateTableHeader(guilds);
   
   // Creating color range for a specific guild based on its total lowest and highest contribution.
   let colorScales = [];
-  for (let i = 0; i < guildData.guilds.length; i++)
+  for (let i = 0; i < guilds.length; i++)
   {
-    let lowestContribution = guildUtilities.findLowestContributionAmount(guildData.dayEntries, guildData.guilds[i].name);
-    let highestContribution = guildUtilities.findHighestContributionAmount(guildData.dayEntries, guildData.guilds[i].name);
+    let lowestContribution = guildUtilities.findLowestContributionAmount(guildDataReference, guilds[i].name);
+    let highestContribution = guildUtilities.findHighestContributionAmount(guildDataReference, guilds[i].name);
     let colorScale = chroma.scale(['red', 'yellow', '#228B22']).domain([lowestContribution, highestContribution]);
     colorScales.push(colorScale);
   }
   
   let tableRowHtmls = [];
-  let guildDataTableRows = guildUtilities.calculateGuildDataTableRows(guildData.guilds, guildData.dayEntries);
+  let guildDataTableRows = guildUtilities.calculateGuildDataTableRows(guildDataReference);
   // guildDataTableRows should already be sorted in chronological order
   for (let i = 0; i < guildDataTableRows.length; i++)
   {
@@ -50,7 +52,7 @@ export default function(guildData, isChronologicalOrder)
     }
   }
   
-  html += generateTableFooter(guildData.guilds);
+  html += generateTableFooter(guilds);
   
   html += '</table>';
   
@@ -60,7 +62,7 @@ export default function(guildData, isChronologicalOrder)
 /**
  * Generates HTML for guild data table headers.
  *
- * @param guilds Contents of the guilds from guildData
+ * @param guilds Contents of the guilds from guildDataReference
  * @return HTML code to generate guild data table headers
  */
 function generateTableHeader(guilds)
@@ -144,7 +146,7 @@ function generateTableRow(date, guilds, colorScales)
 /**
  * Generates HTML for guild data table footers.
  *
- * @param guilds Contents of the guilds from guildData
+ * @param guilds Contents of the guilds from guildDataReference
  * @return HTML code to generate guild data table footers
  */
 function generateTableFooter(guilds)

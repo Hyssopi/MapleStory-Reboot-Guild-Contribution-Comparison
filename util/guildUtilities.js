@@ -1,79 +1,57 @@
 
+//import moment from '../lib/moment.js';
 import * as utilities from './utilities.js';
 
 
 /**
- * Find guild entry of an implied specified day for a specific guild.
+ * Get date list in guildDataReference.
  *
- * @param guildEntries Entries containing all the guilds' data for that specific day
- * @param guildName Name of guild to search
- * @return Guild entry for a specific guild
+ * @param guildDataReference Guild data processed and packaged as a map
+ * @return Date list in guildDataReference
  */
-export function findGuildEntry(guildEntries, guildName)
+export function getDates(guildDataReference)
 {
-  for (let i = 0; i < guildEntries.length; i++)
-  {
-    if (guildEntries[i].name === guildName)
-    {
-      return guildEntries[i];
-    }
-  }
+  return guildDataReference.get('dates');
 }
 
 /**
- * Find guild entry based on date in the day entries list for a specific guild.
+ * Get guild list in guildDataReference.
  *
- * @param dayEntries List of entries by days, each day entry containing all the guilds and its data for that day
- * @param date Specific date (YYYY MM DD) of the entry to find
- * @param guildName Name of guild to search
- * @return Guild entry for a specific guild
+ * @param guildDataReference Guild data processed and packaged as a map
+ * @return Guild list in guildDataReference
  */
-export function findGuildEntryByDate(dayEntries, date, guildName)
+export function getGuilds(guildDataReference)
 {
-  for (let i = 0; i < dayEntries.length; i++)
-  {
-    // Date monthIndex is from 0 to 11.
-    if (dayEntries[i].year === date.year() && (dayEntries[i].month - 1) === date.month() && dayEntries[i].day === date.date())
-    {
-      return findGuildEntry(dayEntries[i].guildEntries, guildName);
-    }
-  }
+  return guildDataReference.get('guilds');
 }
 
 /**
- * Find guild entries based on date.
+ * Get guild entry of a specific guild at a specific date.
  *
- * @param dayEntries List of entries by days, each day entry containing all the guilds and its data for that day
- * @param date Specific date (YYYY MM DD) of the entry to find
- * @return Guild entries for a specific date
+ * @param guildDataReference Guild data processed and packaged as a map
+ * @param date Date to get
+ * @param guildName Name of guild to get
+ * @return Guild entry for a specific guild at a specific date
  */
-export function findGuildEntriesByDate(dayEntries, date)
+export function getGuildEntry(guildDataReference, date, guildName)
 {
-  for (let i = 0; i < dayEntries.length; i++)
-  {
-    // Date monthIndex is from 0 to 11.
-    if (dayEntries[i].year === date.year() && (dayEntries[i].month - 1) === date.month() && dayEntries[i].day === date.date())
-    {
-      return dayEntries[i].guildEntries;
-    }
-  }
+  return guildDataReference.get(getGuildDataReferenceKey(date, guildName));
 }
 
 /**
  * Find the earliest guild entry date from all guilds.
  *
- * @param dayEntries List of entries by days, each day entry containing all the guilds and its data for that day
+ * @param dates List of all the dates from all guilds
  * @return Moment date of the earliest guild entry date of all guilds
  */
-export function findEarliestEntryDate(dayEntries)
+export function findEarliestEntryDate(dates)
 {
   let earliestDate;
-  for (let i = 0; i < dayEntries.length; i++)
+  for (let i = 0; i < dates.length; i++)
   {
-    let loopEntryDate = utilities.getMomentUtcDate(dayEntries[i].year, dayEntries[i].month, dayEntries[i].day);
-    if (!earliestDate || moment(loopEntryDate).isBefore(earliestDate))
+    if (!earliestDate || dates[i].isBefore(earliestDate))
     {
-      earliestDate = loopEntryDate;
+      earliestDate = moment(dates[i]);
     }
   }
   return earliestDate;
@@ -82,42 +60,41 @@ export function findEarliestEntryDate(dayEntries)
 /**
  * Find the latest guild entry date from all guilds.
  *
- * @param dayEntries List of entries by days, each day entry containing all the guilds and its data for that day
+ * @param dates List of all the dates from all guilds
  * @return Moment date of the latest guild entry date of all guilds
  */
-export function findLatestEntryDate(dayEntries)
+export function findLatestEntryDate(dates)
 {
   let latestDate;
-  for (let i = 0; i < dayEntries.length; i++)
+  for (let i = 0; i < dates.length; i++)
   {
-    let loopEntryDate = utilities.getMomentUtcDate(dayEntries[i].year, dayEntries[i].month, dayEntries[i].day);
-    if (!latestDate || moment(loopEntryDate).isAfter(latestDate))
+    if (!latestDate || dates[i].isAfter(latestDate))
     {
-      latestDate = loopEntryDate;
+      latestDate = moment(dates[i]);
     }
   }
   return latestDate;
 }
 
 /**
- * Find the earliest entry date that has a valid contribution given a list of day entries for a specific guild.
+ * Find the earliest entry date that has a valid contribution for a specific guild.
  *
- * @param dayEntries List of entries by days, each day entry containing all the guilds and its data for that day
+ * @param guildDataReference Guild data processed and packaged as a map
  * @param guildName Name of guild to search
  * @return Moment date of the earliest valid guild entry date for contribution for a specific guild
  */
-export function findEarliestValidContributionEntryDate(dayEntries, guildName)
+export function findEarliestValidContributionEntryDate(guildDataReference, guildName)
 {
   let earliestDate;
-  for (let i = 0; i < dayEntries.length; i++)
+  let dates = getDates(guildDataReference);
+  for (let i = 0; i < dates.length; i++)
   {
-    let loopEntryDate = utilities.getMomentUtcDate(dayEntries[i].year, dayEntries[i].month, dayEntries[i].day);
-    if (!earliestDate || moment(loopEntryDate).isBefore(earliestDate))
+    if (!earliestDate || dates[i].isBefore(earliestDate))
     {
-      let guildEntry = findGuildEntry(dayEntries[i].guildEntries, guildName);
+      let guildEntry = getGuildEntry(guildDataReference, dates[i], guildName);
       if (utilities.isNumeric(guildEntry.contribution))
       {
-        earliestDate = loopEntryDate;
+        earliestDate = moment(dates[i]);
       }
     }
   }
@@ -125,24 +102,24 @@ export function findEarliestValidContributionEntryDate(dayEntries, guildName)
 }
 
 /**
- * Find the latest entry date that has a valid contribution given a list of day entries for a specific guild.
+ * Find the latest entry date that has a valid contribution for a specific guild.
  *
- * @param dayEntries List of entries by days, each day entry containing all the guilds and its data for that day
+ * @param guildDataReference Guild data processed and packaged as a map
  * @param guildName Name of guild to search
  * @return Moment date of the latest valid guild entry date for contribution for a specific guild
  */
-export function findLatestValidContributionEntryDate(dayEntries, guildName)
+export function findLatestValidContributionEntryDate(guildDataReference, guildName)
 {
   let latestDate;
-  for (let i = 0; i < dayEntries.length; i++)
+  let dates = getDates(guildDataReference);
+  for (let i = 0; i < dates.length; i++)
   {
-    let loopEntryDate = utilities.getMomentUtcDate(dayEntries[i].year, dayEntries[i].month, dayEntries[i].day);
-    if (!latestDate || moment(loopEntryDate).isAfter(latestDate))
+    if (!latestDate || dates[i].isAfter(latestDate))
     {
-      let guildEntry = findGuildEntry(dayEntries[i].guildEntries, guildName);
+      let guildEntry = getGuildEntry(guildDataReference, dates[i], guildName);
       if (utilities.isNumeric(guildEntry.contribution))
       {
-        latestDate = loopEntryDate;
+        latestDate = moment(dates[i]);
       }
     }
   }
@@ -150,24 +127,25 @@ export function findLatestValidContributionEntryDate(dayEntries, guildName)
 }
 
 /**
- * Find the guild entry date that has a valid contribution at least one month prior to latestEntryDate, given a list of day entries for a specific guild.
+ * Find the guild entry date that has a valid contribution at least one month prior to latestEntryDate for a specific guild.
  *
  * @param latestEntryDate Latest entry date regardless of whether it is a valid or invalid entry
- * @param dayEntries List of entries by days, each day entry containing all the guilds and its data for that day
+ * @param guildDataReference Guild data processed and packaged as a map
  * @param guildName Name of guild to search
  * @return Moment date of the latest valid guild entry date for contribution for a specific guild
  */
-export function findEarlierMonthValidEntryDate(latestEntryDate, dayEntries, guildName)
+export function findEarlierMonthValidEntryDate(latestEntryDate, guildDataReference, guildName)
 {
-  let earliestValidEntryDate = findEarliestValidContributionEntryDate(dayEntries, guildName);
   let earlierMonthValidEntryDate = null;
+  let earliestValidEntryDate = findEarliestValidContributionEntryDate(guildDataReference, guildName);
   
   // Note: the latest entry date considers all guilds, not individual guild entries.
   for (let loopDate = moment(latestEntryDate).subtract(1, 'months'); loopDate.isSameOrAfter(earliestValidEntryDate); loopDate.subtract(1, 'days'))
   {
-    if (utilities.isNumeric(findGuildEntryByDate(dayEntries, loopDate, guildName).contribution))
+    let guildEntry = getGuildEntry(guildDataReference, loopDate, guildName);
+    if (utilities.isNumeric(guildEntry.contribution))
     {
-      earlierMonthValidEntryDate = loopDate;
+      earlierMonthValidEntryDate = moment(loopDate);
       break;
     }
   }
@@ -175,18 +153,44 @@ export function findEarlierMonthValidEntryDate(latestEntryDate, dayEntries, guil
 }
 
 /**
- * Find the lowest contribution value of a given guild given a list of day entries.
+ * Find the previous valid guild entry date prior to baseEntryDate for a specific guild.
  *
- * @param dayEntries List of entries by days, each day entry containing all the guilds and its data for that day
+ * @param baseEntryDate Entry date to start looking prior
+ * @param guildDataReference Guild data processed and packaged as a map
+ * @param guildName Name of guild to search
+ * @return Moment date of the previous valid guild entry date for contribution for a specific guild
+ */
+export function findPreviousValidEntryDate(baseEntryDate, guildDataReference, guildName)
+{
+  let previousValidEntryDate = null;
+  let earliestValidEntryDate = findEarliestValidContributionEntryDate(guildDataReference, guildName);
+  
+  // The latest entry date considers all guilds, not individual guild entries.
+  for (let loopDate = moment(baseEntryDate).subtract(1, 'days'); loopDate.isSameOrAfter(earliestValidEntryDate); loopDate.subtract(1, 'days'))
+  {
+    if (utilities.isNumeric(getGuildEntry(guildDataReference, loopDate, guildName).contribution))
+    {
+      previousValidEntryDate = loopDate;
+      break;
+    }
+  }
+  return previousValidEntryDate;
+}
+
+/**
+ * Find the lowest contribution value of a specific guild.
+ *
+ * @param guildDataReference Guild data processed and packaged as a map
  * @param guildName Name of guild to search
  * @return Lowest contribution value of a specific guild
  */
-export function findLowestContributionAmount(dayEntries, guildName)
+export function findLowestContributionAmount(guildDataReference, guildName)
 {
   let lowestContributionAmount = Number.MAX_SAFE_INTEGER;
-  for (let i = 0; i < dayEntries.length; i++)
+  let dates = getDates(guildDataReference);
+  for (let i = 0; i < dates.length; i++)
   {
-    let guildEntry = findGuildEntry(dayEntries[i].guildEntries, guildName);
+    let guildEntry = getGuildEntry(guildDataReference, dates[i], guildName);
     if (utilities.isNumeric(guildEntry.contribution) && guildEntry.contribution < lowestContributionAmount)
     {
       lowestContributionAmount = guildEntry.contribution;
@@ -196,18 +200,19 @@ export function findLowestContributionAmount(dayEntries, guildName)
 }
 
 /**
- * Find the highest contribution value of a given guild given a list of day entries.
+ * Find the highest contribution value of a specific guild.
  *
- * @param dayEntries List of entries by days, each day entry containing all the guilds and its data for that day
+ * @param guildDataReference Guild data processed and packaged as a map
  * @param guildName Name of guild to search
  * @return Highest contribution value of a specific guild
  */
-export function findHighestContributionAmount(dayEntries, guildName)
+export function findHighestContributionAmount(guildDataReference, guildName)
 {
   let highestContributionAmount = Number.MIN_SAFE_INTEGER;
-  for (let i = 0; i < dayEntries.length; i++)
+  let dates = getDates(guildDataReference);
+  for (let i = 0; i < dates.length; i++)
   {
-    let guildEntry = findGuildEntry(dayEntries[i].guildEntries, guildName);
+    let guildEntry = getGuildEntry(guildDataReference, dates[i], guildName);
     if (utilities.isNumeric(guildEntry.contribution) && guildEntry.contribution > highestContributionAmount)
     {
       highestContributionAmount = guildEntry.contribution;
@@ -219,27 +224,26 @@ export function findHighestContributionAmount(dayEntries, guildName)
 /**
  * Calculate and return processed guild data packaged as a neat object.
  *
- * @param guildData Contains all the guild data and data entries
+ * @param guildDataReference Guild data processed and packaged as a map
  * @return Processed guild data
  */
-export function calculateGuildSummaryResults(guildData)
+export function calculateGuildSummaryResults(guildDataReference)
 {
-  let latestEntryDate = findLatestEntryDate(guildData.dayEntries);
   let guildSummaryResults = [];
-  for (let i = 0; i < guildData.guilds.length; i++)
+  let guilds = getGuilds(guildDataReference);
+  let latestEntryDate = findLatestEntryDate(getDates(guildDataReference));
+  for (let i = 0; i < guilds.length; i++)
   {
-    console.info('Calculating average for ' + guildData.guilds[i].name + '...');
+    let latestValidEntryDate = findLatestValidContributionEntryDate(guildDataReference, guilds[i].name);
+    let latestValidContribution = getGuildEntry(guildDataReference, latestValidEntryDate, guilds[i].name).contribution;
     
-    let latestValidEntryDate = findLatestValidContributionEntryDate(guildData.dayEntries, guildData.guilds[i].name);
-    let latestValidContribution = findGuildEntryByDate(guildData.dayEntries, latestValidEntryDate, guildData.guilds[i].name).contribution;
-    
-    let earlierMonthValidEntryDate = findEarlierMonthValidEntryDate(latestEntryDate, guildData.dayEntries, guildData.guilds[i].name);
+    let earlierMonthValidEntryDate = findEarlierMonthValidEntryDate(latestEntryDate, guildDataReference, guilds[i].name);
     if (!earlierMonthValidEntryDate)
     {
-      console.log('earlierMonthValidEntryDate is null for ' + guildData.guilds[i].name + ', setting it to latestValidEntryDate so it will be caught later as invalid average calculation');
+      console.log('earlierMonthValidEntryDate is null for ' + guilds[i].name + ', setting it to latestValidEntryDate so it will be caught later as invalid average calculation');
       earlierMonthValidEntryDate = moment(latestValidEntryDate);
     }
-    let earlierMonthValidContribution = findGuildEntryByDate(guildData.dayEntries, earlierMonthValidEntryDate, guildData.guilds[i].name).contribution;
+    let earlierMonthValidContribution = getGuildEntry(guildDataReference, earlierMonthValidEntryDate, guilds[i].name).contribution;
     
     let averagePerDay = (latestValidContribution - earlierMonthValidContribution) / latestValidEntryDate.diff(earlierMonthValidEntryDate, 'days');
     if (moment.duration(latestEntryDate.diff(earlierMonthValidEntryDate)) > moment.duration(5, 'weeks'))
@@ -255,10 +259,10 @@ export function calculateGuildSummaryResults(guildData)
     
     let guildSummaryResult =
     {
-      guildName: guildData.guilds[i].name,
-      guildColor: guildData.guilds[i].color,
-      guildBackgroundColor: guildData.guilds[i].backgroundColor,
-      guildSymbolUrl: guildData.guilds[i].symbolUrl,
+      guildName: guilds[i].name,
+      guildColor: guilds[i].color,
+      guildBackgroundColor: guilds[i].backgroundColor,
+      guildSymbolUrl: guilds[i].symbolUrl,
       latestValidEntryDate: latestValidEntryDate,
       latestValidContribution: latestValidContribution,
       earlierMonthValidEntryDate: earlierMonthValidEntryDate,
@@ -268,27 +272,6 @@ export function calculateGuildSummaryResults(guildData)
     guildSummaryResults.push(guildSummaryResult);
   }
   
-  guildSummaryResults.sort(function(a, b){return b.latestValidContribution - a.latestValidContribution;});
-  
-  for (let i = 0; i < guildSummaryResults.length; i++)
-  {
-    let guildSummaryResult = guildSummaryResults[i];
-    console.table(
-    {
-      guildName: guildSummaryResult.guildName,
-      guildColor: guildSummaryResult.guildColor,
-      guildBackgroundColor: guildSummaryResult.guildBackgroundColor,
-      guildSymbolUrl: guildSummaryResult.guildSymbolUrl,
-      latestValidEntryDate: utilities.getFormattedDate(guildSummaryResult.latestValidEntryDate),
-      latestValidContribution: utilities.thousandsCommaFormatNumber(guildSummaryResult.latestValidContribution),
-      earlierMonthValidEntryDate: utilities.getFormattedDate(guildSummaryResult.earlierMonthValidEntryDate),
-      earlierMonthValidContribution: utilities.thousandsCommaFormatNumber(guildSummaryResult.earlierMonthValidContribution),
-      averagePerDay: utilities.thousandsCommaFormatNumber(guildSummaryResult.averagePerDay)
-    });
-  }
-  console.log('guildSummaryResults:');
-  console.log(guildSummaryResults);
-  
   return guildSummaryResults;
 }
 
@@ -296,19 +279,20 @@ export function calculateGuildSummaryResults(guildData)
  * Calculate and return processed guild data table rows.
  * Each row contains a date and a list of all the guilds and each guild data entry having contribution/member count, and contribution/member count difference from last valid entry.
  *
- * @param guilds Contents of the guilds from guildData
- * @param dayEntries List of entries by days, each day entry containing all the guilds and its data for that day
+ * @param guildDataReference Guild data processed and packaged as a map
  * @return Processed guild data table rows
  */
-export function calculateGuildDataTableRows(guilds, dayEntries)
+export function calculateGuildDataTableRows(guildDataReference)
 {
   let guildDataTableRows = [];
   
   let previousValidGuildContributionDates = [];
   let previousValidGuildMemberCountDates = [];
   
-  let earliestEntryDate = findEarliestEntryDate(dayEntries);
-  let latestEntryDate = findLatestEntryDate(dayEntries);
+  let earliestEntryDate = findEarliestEntryDate(getDates(guildDataReference));
+  let latestEntryDate = findLatestEntryDate(getDates(guildDataReference));
+  
+  let guilds = getGuilds(guildDataReference);
   
   for (let loopDate = moment(earliestEntryDate); loopDate.isSameOrBefore(latestEntryDate); loopDate.add(1, 'days'))
   {
@@ -318,21 +302,20 @@ export function calculateGuildDataTableRows(guilds, dayEntries)
       guilds: []
     };
     
-    let guildEntries = findGuildEntriesByDate(dayEntries, loopDate);
     for (let i = 0; i < guilds.length; i++)
     {
-      let guildEntry = findGuildEntry(guildEntries, guilds[i].name);
+      let guildEntry = getGuildEntry(guildDataReference, loopDate, guilds[i].name);
       
-      let contribution = (guildEntry && guildEntry.contribution) ? guildEntry.contribution : '-';
-      let memberCount = (guildEntry && guildEntry.memberCount) ? guildEntry.memberCount : '-';
+      let contribution = guildEntry.contribution ? guildEntry.contribution : '-';
+      let memberCount = guildEntry.memberCount ? guildEntry.memberCount : '-';
       
-      // Find the averaged contribution given the contribution of the current given date and the previous valid contribution.
+      // Find the averaged contribution given the contribution of the current given date and the previous valid contribution
       let contributionDifferenceFromLastEntryAveraged = '-';
       if (utilities.isNumeric(contribution))
       {
         if (previousValidGuildContributionDates[i])
         {
-          contributionDifferenceFromLastEntryAveraged = (contribution - findGuildEntryByDate(dayEntries, previousValidGuildContributionDates[i], guilds[i].name).contribution) / loopDate.diff(previousValidGuildContributionDates[i], 'days');
+          contributionDifferenceFromLastEntryAveraged = (contribution - getGuildEntry(guildDataReference, previousValidGuildContributionDates[i], guilds[i].name).contribution) / loopDate.diff(previousValidGuildContributionDates[i], 'days');
         }
         previousValidGuildContributionDates[i] = moment(loopDate);
       }
@@ -342,7 +325,7 @@ export function calculateGuildDataTableRows(guilds, dayEntries)
       {
         if (previousValidGuildMemberCountDates[i])
         {
-          memberCountDifferenceFromLastEntry = memberCount - findGuildEntryByDate(dayEntries, previousValidGuildMemberCountDates[i], guilds[i].name).memberCount;
+          memberCountDifferenceFromLastEntry = memberCount - getGuildEntry(guildDataReference, previousValidGuildMemberCountDates[i], guilds[i].name).memberCount;
         }
         previousValidGuildMemberCountDates[i] = moment(loopDate);
       }
@@ -360,9 +343,6 @@ export function calculateGuildDataTableRows(guilds, dayEntries)
     guildDataTableRows.push(guildDataTableRow);
   }
   
-  console.log('guildDataTableRows:');
-  console.log(guildDataTableRows);
-  
   return guildDataTableRows;
 }
 
@@ -373,88 +353,130 @@ export function calculateGuildDataTableRows(guilds, dayEntries)
  */
 export function printDebug(guildData)
 {
-  console.log("*****printDebug() TEST PRINT START*****");
-  console.log('Guild data:');
+  console.log('\n\n');
+  console.info("*****printDebug() TEST PRINT START*****");
+  
+  console.info('Guild Data:');
   console.log(guildData);
   console.log('\n');
-  console.log('findEarliestEntryDate = ' + utilities.getFormattedDate(findEarliestEntryDate(guildData.dayEntries)));
-  let latestEntryDate = findLatestEntryDate(guildData.dayEntries);
-  console.log('findLatestEntryDate = ' + utilities.getFormattedDate(latestEntryDate));
+  
+  let guildDataReference = calculateGuildDataReference(guildData);
+  let dates = getDates(guildDataReference);
+  let guilds = getGuilds(guildDataReference);
+  console.info('Guild Data Reference:');
+  console.log(guildDataReference);
+  console.info('Guild Data Reference - Dates:');
+  console.log(dates);
+  console.info('Guild Data Reference - Guilds:');
+  console.log(guilds);
+  
   console.log('\n');
   
-  for (let i = 0; i < guildData.guilds.length; i++)
+  console.info('findEarliestEntryDate: ' + utilities.getFormattedDate(findEarliestEntryDate(dates)));
+  let latestEntryDate = findLatestEntryDate(dates);
+  console.info('findLatestEntryDate: ' + utilities.getFormattedDate(latestEntryDate));
+  
+  console.log('\n');
+  
+  for (let i = 0; i < guilds.length; i++)
   {
-    let guildName = guildData.guilds[i].name;
-    let guildEntries = guildData.guilds[i].entries;
+    let guildName = guilds[i].name;
     
-    console.log('guildData.guilds[' + i + ']: ' + guildName);
+    console.log('guilds[' + i + ']: ' + guildName);
     
-    console.log('findEarliestValidContributionEntryDate = ' + utilities.getFormattedDate(findEarliestValidContributionEntryDate(guildData.dayEntries, guildName)));
-    console.log('findLatestValidContributionEntryDate = ' + utilities.getFormattedDate(findLatestValidContributionEntryDate(guildData.dayEntries, guildName)));
-    console.log('findEarlierMonthValidEntryDate = ' + utilities.getFormattedDate(findEarlierMonthValidEntryDate(latestEntryDate, guildData.dayEntries, guildName)));
+    console.info('findEarliestValidContributionEntryDate: ' + utilities.getFormattedDate(findEarliestValidContributionEntryDate(guildDataReference, guildName)));
+    console.info('findLatestValidContributionEntryDate: ' + utilities.getFormattedDate(findLatestValidContributionEntryDate(guildDataReference, guildName)));
     
-    console.log('findLowestContributionAmount = ' + findLowestContributionAmount(guildData.dayEntries, guildName));
-    console.log('findHighestContributionAmount = ' + findHighestContributionAmount(guildData.dayEntries, guildName));
+    console.info('findEarlierMonthValidEntryDate: ' + utilities.getFormattedDate(findEarlierMonthValidEntryDate(latestEntryDate, guildDataReference, guildName)));
+    console.info('findPreviousValidEntryDate: ' + utilities.getFormattedDate(findPreviousValidEntryDate(latestEntryDate, guildDataReference, guildName)));
+    
+    console.info('findLowestContributionAmount: ' + findLowestContributionAmount(guildDataReference, guildName));
+    console.info('findHighestContributionAmount: ' + findHighestContributionAmount(guildDataReference, guildName));
     
     console.log('\n');
   }
+  
+  console.info('Guild Data Table Rows:');
+  console.log(calculateGuildDataTableRows(guildDataReference));
+  
+  console.info('Guild Summary Results:');
+  let guildSummaryResults = calculateGuildSummaryResults(guildDataReference);
+  console.log(guildSummaryResults);
+  for (let i = 0; i < guildSummaryResults.length; i++)
+  {
+    let guildSummaryResult = guildSummaryResults[i];
+    console.table(
+    {
+      guildName: guildSummaryResult.guildName,
+      guildColor: guildSummaryResult.guildColor,
+      guildBackgroundColor: guildSummaryResult.guildBackgroundColor,
+      guildSymbolUrl: guildSummaryResult.guildSymbolUrl,
+      latestValidEntryDate: utilities.getFormattedDate(guildSummaryResult.latestValidEntryDate),
+      latestValidContribution: utilities.thousandsCommaFormatNumber(guildSummaryResult.latestValidContribution),
+      earlierMonthValidEntryDate: utilities.getFormattedDate(guildSummaryResult.earlierMonthValidEntryDate),
+      earlierMonthValidContribution: utilities.thousandsCommaFormatNumber(guildSummaryResult.earlierMonthValidContribution),
+      averagePerDay: utilities.thousandsCommaFormatNumber(guildSummaryResult.averagePerDay)
+    });
+  }
+  
   console.log("*****printDebug() TEST PRINT END*****");
 }
 
 /**
- * Formatted guild text line with the format: [Guild name    Guild contribution  Text].
- * Guild name is first and left aligned, Guild contribution is right aligned, and then Text is after.
+ * Get Guild Data Reference Key for a specific guild at a specific date.
  *
- * @param guildName Guild name
- * @param contribution Guild contribution as a number
- * @param description Text to append after
- * @return Formatted guild text line
+ * @param date Date to get
+ * @param guildName Name of guild to get
+ * @return Guild Data Reference Key for a specific guild at a specific date
  */
-export function getFormattedGuildTextLine(guildName, contribution, description)
+export function getGuildDataReferenceKey(date, guildName)
 {
-  const GUILD_NAME_CONTRIBUTION_MAXIMUM_LENGTH = 11 + 12;
-  const DESCRIPTION_PRE_GAP = 3;
-  
-  // Setup base string with whitespaces
-  let formattedGuildTextLine = ' ';
-  formattedGuildTextLine = formattedGuildTextLine.repeat(GUILD_NAME_CONTRIBUTION_MAXIMUM_LENGTH + DESCRIPTION_PRE_GAP);
-  
-  // Adding Guild name
-  formattedGuildTextLine = utilities.stringReplaceAt(formattedGuildTextLine, 0, guildName);
-  
-  // Adding Guild contribution
-  // Guild contribution is added after Guild name, so contribution text will overwrite name text if there are any overlaps
-  // Guild contribution is right aligned
-  let formattedContribution = utilities.isNumeric(contribution) ? utilities.thousandsCommaFormatNumber(Math.floor(contribution)) : 'N/A';
-  formattedGuildTextLine = utilities.stringReplaceAt(formattedGuildTextLine, GUILD_NAME_CONTRIBUTION_MAXIMUM_LENGTH - formattedContribution.length, formattedContribution);
-  
-  // Adding text after
-  formattedGuildTextLine = utilities.stringReplaceAt(formattedGuildTextLine, GUILD_NAME_CONTRIBUTION_MAXIMUM_LENGTH + DESCRIPTION_PRE_GAP, description);
-  
-  return formattedGuildTextLine;
+  return utilities.getFormattedDate(date) + '-' + guildName;
 }
 
 /**
- * Find the previous valid guild entry date prior to baseEntryDate, given a list of day entries for a specific guild.
+ * Calculate Guild data and process and package into a map to be used as reference.
  *
- * @param baseEntryDate Entry date to start looking prior
- * @param dayEntries List of entries by days, each day entry containing all the guilds and its data for that day
- * @param guildName Name of guild to search
- * @return Moment date of the previous valid guild entry date for contribution for a specific guild
+ * @param guildData Contains all the guild data and data entries
  */
-export function findPreviousValidEntryDate(baseEntryDate, dayEntries, guildName)
+export function calculateGuildDataReference(guildData)
 {
-  let earliestValidEntryDate = findEarliestValidContributionEntryDate(dayEntries, guildName);
-  let previousValidEntryDate = null;
+  let guildDataReference = new Map();
   
-  // Note: the latest entry date considers all guilds, not individual guild entries.
-  for (let loopDate = moment(baseEntryDate).subtract(1, 'days'); loopDate.isSameOrAfter(earliestValidEntryDate); loopDate.subtract(1, 'days'))
+  let dates = [];
+  for (let i = 0; i < guildData.dayEntries.length; i++)
   {
-    if (utilities.isNumeric(findGuildEntryByDate(dayEntries, loopDate, guildName).contribution))
+    let date = utilities.getMomentUtcDate(guildData.dayEntries[i].year, guildData.dayEntries[i].month, guildData.dayEntries[i].day);
+    for (let j = 0; j < guildData.dayEntries[i].guildEntries.length; j++)
     {
-      previousValidEntryDate = loopDate;
-      break;
+      let guildName = guildData.dayEntries[i].guildEntries[j].name;
+      let guildEntry =
+      {
+        contribution: guildData.dayEntries[i].guildEntries[j].contribution,
+        memberCount: guildData.dayEntries[i].guildEntries[j].memberCount
+      };
+      guildDataReference.set(getGuildDataReferenceKey(date, guildName), guildEntry);
     }
+    dates.push(moment(date));
   }
-  return previousValidEntryDate;
+  
+  guildDataReference.set('dates', dates);
+  getDates(guildDataReference).sort(function(date1, date2)
+  {
+    return date2.isSameOrBefore(date1);
+  });
+  
+  guildDataReference.set('guilds', guildData.guilds);
+  getGuilds(guildDataReference).sort(function(guild1, guild2)
+  {
+    let latestValidEntryDate1 = findLatestValidContributionEntryDate(guildDataReference, guild1.name);
+    let latestValidContribution1 = getGuildEntry(guildDataReference, latestValidEntryDate1, guild1.name).contribution;
+    
+    let latestValidEntryDate2 = findLatestValidContributionEntryDate(guildDataReference, guild2.name);
+    let latestValidContribution2 = getGuildEntry(guildDataReference, latestValidEntryDate2, guild2.name).contribution;
+    
+    return latestValidContribution2 - latestValidContribution1;
+  });
+  
+  return guildDataReference;
 }

@@ -8,7 +8,7 @@ import guildAbout from './guildAbout.js';
 
 const GUILD_DATA_JSON_PATH = 'data/guildData.json';
 
-let guildDataReference = null;
+let guildDataReference;
 let isDataTableChronologicalOrder = false;
 
 console.info('Reading: \'' + GUILD_DATA_JSON_PATH + '\'');
@@ -28,8 +28,12 @@ fetch(GUILD_DATA_JSON_PATH)
   {
     console.info('Successfully read guild data:');
     console.log(guildData);
-    guildDataReference = guildData;
-    setupTabs(guildData);
+    
+    guildDataReference = guildUtilities.calculateGuildDataReference(guildData);
+    console.log(guildDataReference);
+    setupTabs(guildDataReference);
+    
+    guildUtilities.printDebug(guildData);
   })
   .catch (function(error)
   {
@@ -39,31 +43,29 @@ fetch(GUILD_DATA_JSON_PATH)
 /**
  * Handles and setup all the main page's tabs and put it to the HTML.
  *
- * @param guildData Contains all the guild data and data entries
+ * @param guildDataReference Guild data processed and packaged as a map
  */
-function setupTabs(guildData)
+function setupTabs(guildDataReference)
 {
   // Guild Contribution Graph
   let chartHtmlContainerId = 'chartContainer';
   let guildContributionGraphHtml = '<div id=' + chartHtmlContainerId + ' style="width: 99%; height: 90%; position: absolute;"></div>';
   document.getElementById("guildContributionGraphHtmlWrapper").innerHTML = guildContributionGraphHtml;
-  drawGraph(chartHtmlContainerId, guildData);
+  drawGraph(chartHtmlContainerId, guildDataReference);
   
-  let guildSummaryResults = guildUtilities.calculateGuildSummaryResults(guildData);
+  let guildSummaryResults = guildUtilities.calculateGuildSummaryResults(guildDataReference);
   
   // Guild Summary Block
   let guildSummaryBlockHtml = guildSummaryBlock(guildSummaryResults);
   document.getElementById("guildSummaryBlockHtmlWrapper").innerHTML = guildSummaryBlockHtml;
   
   // Guild Data Table
-  let guildDataTableHtml = guildDataTable(guildData, isDataTableChronologicalOrder);
+  let guildDataTableHtml = guildDataTable(guildDataReference, isDataTableChronologicalOrder);
   document.getElementById("guildDataTableHtmlWrapper").innerHTML = guildDataTableHtml;
   
   // Guild About
-  let guildAboutHtml = guildAbout(guildData);
+  let guildAboutHtml = guildAbout();
   document.getElementById("guildAboutHtmlWrapper").innerHTML = guildAboutHtml;
-  
-  guildUtilities.printDebug(guildData);
 }
 
 window.addEventListener("keydown", keydownResponse, false);

@@ -1,5 +1,6 @@
 
 import '../lib/highcharts.js';
+import * as utilities from '../util/utilities.js';
 import * as guildUtilities from '../util/guildUtilities.js';
 
 
@@ -221,81 +222,79 @@ Highcharts.setOptions(
 });
 
 /**
- * Extract data from guildData and create the list of series. Each series entry being a guild entry.
+ * Extract data from guildDataReference and create the list of series. Each series entry being a guild entry.
  *
- * @param guildData Contains all the guild data and data entries
- * @return List of series with data extracted from guildData
+ * @param guildDataReference Guild data processed and packaged as a map
+ * @return List of series with data extracted from guildDataReference
  */
-function generateSeries(guildData)
+function generateSeries(guildDataReference)
 {
   let series = [];
   let seriesGuildEntryReferenceTable = [];
-  for (let i = 0; i < guildData.guilds.length; i++)
+  let guilds = guildUtilities.getGuilds(guildDataReference);
+  for (let i = 0; i < guilds.length; i++)
   {
-    if (guildData.guilds[i])
+    if (guilds[i])
     {
-      // Add in series entry for each guild into the series list for each guild.
+      // Add in series entry for each guild into the series list for each guild
       let seriesGuildEntry =
       {
-        name: guildData.guilds[i].name,
-        color: guildData.guilds[i].color,
+        name: guilds[i].name,
+        color: guilds[i].color,
         marker:
         {
-          symbol: 'url(' + guildData.guilds[i].symbolUrl + ')',
+          symbol: 'url(' + guilds[i].symbolUrl + ')',
           width: 22,
           height: 22
         },
         data: []
       }
       series.push(seriesGuildEntry);
-      seriesGuildEntryReferenceTable[guildData.guilds[i].name] = seriesGuildEntry;
+      seriesGuildEntryReferenceTable[guilds[i].name] = seriesGuildEntry;
     }
   }
   
-  for (let i = 0; i < guildData.dayEntries.length; i++)
+  let dates = guildUtilities.getDates(guildDataReference);
+  for (let i = 0; i < dates.length; i++)
   {
-    let year = guildData.dayEntries[i].year;
-    let month = guildData.dayEntries[i].month;
-    let day = guildData.dayEntries[i].day;
-    
-    for (let j = 0; j < guildData.dayEntries[i].guildEntries.length; j++)
+    for (let j = 0; j < guilds.length; j++)
     {
-      let guildName = guildData.dayEntries[i].guildEntries[j].name;
-      let contribution = guildData.dayEntries[i].guildEntries[j].contribution;
-      
-      if (!contribution)
+      let guildEntry = guildUtilities.getGuildEntry(guildDataReference, dates[i], guilds[j].name);
+      if (!guildEntry.contribution)
       {
         continue;
       }
       
       let seriesDataEntry =
       {
-        // Date month is from 0 to 11.
-        x: Date.UTC(year, month - 1, day),
-        y: contribution
+        x: Date.UTC(dates[i].year(), dates[i].month(), dates[i].date()),
+        y: guildEntry.contribution
       }
-      seriesGuildEntryReferenceTable[guildName].data.push(seriesDataEntry);
+      seriesGuildEntryReferenceTable[guilds[j].name].data.push(seriesDataEntry);
     }
   }
   
-  // Sort the data points of a guild by date.
+  // Sort the data points of a guild by date
   for (let i = 0; i < series.length; i++)
   {
-    series[i].data.sort(function(a, b){return a.x - b.x;});
+    series[i].data.sort(function(seriesDataEntry1, seriesDataEntry2)
+    {
+      return seriesDataEntry1.x - seriesDataEntry2.x;
+    });
   }
   
   return series;
 }
 
 /**
- * Extracts data from guildData and draws the chart to the HTML container ID.
+ * Extracts data from guildDataReference and draws the chart to the HTML container ID.
  *
- * @param chartHtmlContainerId HTML ID to draw chart at
- * @param guildData Contains all the guild data and data entries
+ * @param chartHtmlContainerId HTML ID to draw chart on
+ * @param guildDataReference Guild data processed and packaged as a map
  */
-export function drawGraph(chartHtmlContainerId, guildData)
+export function drawGraph(chartHtmlContainerId, guildDataReference)
 {
-  let series = generateSeries(guildData);
+  let series = generateSeries(guildDataReference);
   let graphChart = Highcharts.chart(chartHtmlContainerId,
   {
     chart: chart,
@@ -311,8 +310,8 @@ export function drawGraph(chartHtmlContainerId, guildData)
     series: series
   });
   
-  // Zoom in chart to a time frame of one month prior to latest date to latest date.
-  let latestEntryDate = guildUtilities.findLatestEntryDate(guildData.dayEntries);
+  // Zoom in chart to a time frame of one month prior to latest date to latest date
+  let latestEntryDate = guildUtilities.findLatestEntryDate(guildUtilities.getDates(guildDataReference));
   let oneMonthPriorLatestEntryDate = moment(latestEntryDate).subtract(1, 'months');
   graphChart.xAxis[0].zoom(oneMonthPriorLatestEntryDate.valueOf(), latestEntryDate.valueOf());
   graphChart.redraw();
