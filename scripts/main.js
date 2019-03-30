@@ -8,7 +8,7 @@ import guildAbout from './guildAbout.js';
 
 const GUILD_DATA_JSON_PATH = 'data/guildData.json';
 
-let guildDataReference;
+let guildDataReference = null;
 let isDataTableChronologicalOrder = false;
 
 console.info('Reading: \'' + GUILD_DATA_JSON_PATH + '\'');

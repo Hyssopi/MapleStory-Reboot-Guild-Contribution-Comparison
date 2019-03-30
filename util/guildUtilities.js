@@ -170,7 +170,7 @@ export function findPreviousValidEntryDate(baseEntryDate, guildDataReference, gu
   {
     if (utilities.isNumeric(getGuildEntry(guildDataReference, loopDate, guildName).contribution))
     {
-      previousValidEntryDate = loopDate;
+      previousValidEntryDate = moment(loopDate);
       break;
     }
   }
