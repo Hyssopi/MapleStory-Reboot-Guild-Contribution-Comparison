@@ -6,7 +6,7 @@ import * as guildUtilities from '../util/guildUtilities.js';
 /**
  * Generates HTML for guild summary block using guildSummaryResults.
  *
- * @param guildSummaryResults Contains processed guild data
+ * @param guildSummaryResults Array of results of the calculations done, each index specifies a different guild
  * @return HTML code to generate guild summary block
  */
 export default function(guildSummaryResults)
