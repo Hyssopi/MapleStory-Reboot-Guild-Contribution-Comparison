@@ -64,11 +64,11 @@ let time =
 
 let title =
 {
-  text: 'MapleStory Top Reboot Guild Contribution Comparison',
+  text: 'MapleStory Top Reboot Guild Contribution',
   style:
   {
     color: '#000000',
-    fontWeight: 'normal',
+    fontWeight: 'bold',
     fontSize: '26px',
     fontFamily: 'Arial, Liberation Sans, sans-serif'
   }
