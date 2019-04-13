@@ -14,11 +14,13 @@ export default function(guildDataReference, isChronologicalOrder)
 {
   let html = '';
   
-  html += '<table align="center" class="hoverRowHighlight" style="border-collapse: collapse;">';
+  html += '<table align="center" style="border-collapse: collapse;">';
   
   let guilds = guildUtilities.getGuilds(guildDataReference);
   
+  html += '<thead>';
   html += generateTableHeader(guilds);
+  html += '</thead>';
   
   // Creating color range for a specific guild based on its total lowest and highest contribution.
   let colorScales = [];
@@ -30,6 +32,7 @@ export default function(guildDataReference, isChronologicalOrder)
     colorScales.push(colorScale);
   }
   
+  html += '<tbody class="hoverRowHighlight">';
   let tableRowHtmls = [];
   let guildDataTableRows = guildUtilities.calculateGuildDataTableRows(guildDataReference);
   // guildDataTableRows should already be sorted in chronological order
@@ -51,8 +54,11 @@ export default function(guildDataReference, isChronologicalOrder)
       html += tableRowHtmls[i];
     }
   }
+  html += '</tbody>';
   
+  html += '<thead>';
   html += generateTableFooter(guilds);
+  html += '</thead>';
   
   html += '</table>';
   
