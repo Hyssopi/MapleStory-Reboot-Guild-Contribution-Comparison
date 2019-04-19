@@ -1,5 +1,5 @@
 # MapleStory Reboot Guild Contribution Comparison
-Visualization and comparison of the top MapleStory Reboot Guilds. Compares guild contribution and member count. Provides line chart, summary/trends, and table of data visualizations.
+Interactive visualization and comparison of the top MapleStory Reboot Guilds. Displays details and comparison of the guild contribution and member count. Visualizations include: line chart, summary/trends, and data table.
 
 ![splash](images/splash.png)
 
