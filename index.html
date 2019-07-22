@@ -36,6 +36,30 @@
   </body>
   
   <script src="scripts/main.js" type="module"></script>
+  
+  <script>
+    let corsInfoMessage = '';
+    corsInfoMessage += 'Note: Opening the HTML file locally may give a Cross-Origin Request Blocked warning (and not properly load the webpage):' + '\n';
+    corsInfoMessage += '"""' + '\n';
+    corsInfoMessage += '  Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at file:///%USERPROFILE%/Desktop/MapleStory-Reboot-Guild-Contribution-Comparison/scripts/main.js. (Reason: CORS request not http).' + '\n';
+    corsInfoMessage += '  Module source URI is not allowed in this document: “file:///%USERPROFILE%/Desktop/MapleStory-Reboot-Guild-Contribution-Comparison/scripts/main.js”.' + '\n';
+    corsInfoMessage += '"""' + '\n';
+    
+    corsInfoMessage += '\n';
+    
+    corsInfoMessage += 'Solution:' + '\n';
+    corsInfoMessage += '* Firefox: about:config -> privacy.file_unique_origin = false' + '\n';
+    
+    corsInfoMessage += '\n';
+    
+    corsInfoMessage += 'References:' + '\n';
+    corsInfoMessage += '* https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS/Errors/CORSRequestNotHttp' + '\n';
+    corsInfoMessage += '* https://stackoverflow.com/questions/56999411/firefox-68-local-files-now-treated-as-cross-origin-is-there-a-way-to-override' + '\n';
+    corsInfoMessage += '* https://stackoverflow.com/questions/57081740/accessing-local-files-with-d3-json-no-longer-working-for-firefox' + '\n';
+    
+    console.log(corsInfoMessage);
+  </script>
+  
   <script>
     function openTab(event, tabId)
     {
