@@ -103,7 +103,7 @@ let legend =
 let xAxis =
 {
   type: 'datetime',
-  lineWidth: 1,
+  lineWidth: 2,
   lineColor: '#000000',
   gridLineWidth: 1,
   gridLineColor: '#C0C0C0',
@@ -134,10 +134,19 @@ let xAxis =
 let yAxis =
 {
   tickmarkPlacement: 'on',
-  lineWidth: 1,
+  lineWidth: 2,
   lineColor: '#000000',
   gridLineWidth: 1,
   gridLineColor: '#C0C0C0',
+  plotLines:
+  [
+    {
+      value: 0,
+      color: 'black',
+      width: 2,
+      zIndex: 1
+    }
+  ],
   labels:
   {
     format: '{value:,.0f}',
@@ -301,6 +310,33 @@ function generateSeries(guildDataReference)
 export function drawContributionGraph(chartHtmlContainerId, guildDataReference)
 {
   let series = generateSeries(guildDataReference);
+  
+  // TODO: Find a better way to improve adding bolded interval axis
+  // Adding plot lines to bold certain interval axis
+  let highestContributionValue = 0;
+  for (let i = 0; i < series.length; i++)
+  {
+    for (let j = 0; j < series[i].data.length; j++)
+    {
+      if (series[i].data[j].y > highestContributionValue)
+      {
+        highestContributionValue = series[i].data[j].y;
+      }
+    }
+  }
+  let boldYAxisInterval = 10e6;
+  for (let i = 0; i < Math.floor(highestContributionValue / boldYAxisInterval) * 2; i++)
+  {
+    let plotLine =
+    {
+      value: i * boldYAxisInterval,
+      color: '#A0A0A0',
+      width: 1,
+      zIndex: 1
+    }
+    yAxis.plotLines.push(plotLine);
+  }
+  
   let graphChart = Highcharts.chart(chartHtmlContainerId,
   {
     chart: chart,

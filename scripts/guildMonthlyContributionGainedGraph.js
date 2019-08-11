@@ -97,7 +97,7 @@ let legend =
 
 let xAxis =
 {
-  lineWidth: 1,
+  lineWidth: 2,
   lineColor: '#000000',
   gridLineWidth: 1,
   gridLineColor: '#C0C0C0',
@@ -125,10 +125,19 @@ let xAxis =
 let yAxis =
 {
   tickmarkPlacement: 'on',
-  lineWidth: 1,
+  lineWidth: 2,
   lineColor: '#000000',
   gridLineWidth: 1,
   gridLineColor: '#C0C0C0',
+  plotLines:
+  [
+    {
+      value: 0,
+      color: 'black',
+      width: 2,
+      zIndex: 1
+    }
+  ],
   labels:
   {
     format: '{value:,.0f}',
@@ -294,6 +303,32 @@ export function drawMonthlyContributionGainedGraph(chartHtmlContainerId, guildDa
         console.warn('Mismatch series indexes not corresponding to the correct guild, should not happen');
       }
     }
+  }
+  
+  // TODO: Find a better way to improve adding bolded interval axis
+  // Adding plot lines to bold certain interval axis
+  let maximumContributionDifference = 0;
+  for (let i = 0; i < series.length; i++)
+  {
+    for (let j = 0; j < series[i].data.length; j++)
+    {
+      if (Math.abs(series[i].data[j]) > maximumContributionDifference)
+      {
+        maximumContributionDifference = Math.abs(series[i].data[j]);
+      }
+    }
+  }
+  let boldYAxisInterval = 1e6;
+  for (let i = -1 * Math.floor(maximumContributionDifference / boldYAxisInterval) * 2; i < Math.floor(maximumContributionDifference / boldYAxisInterval) * 2; i++)
+  {
+    let plotLine =
+    {
+      value: i * boldYAxisInterval,
+      color: '#A0A0A0',
+      width: 1,
+      zIndex: 1
+    }
+    yAxis.plotLines.push(plotLine);
   }
   
   console.info('drawMonthlyContributionGainedGraph:');
