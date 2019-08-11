@@ -76,6 +76,7 @@ let legend =
   verticalAlign: 'top',
   floating: false,
   padding: 10,
+  itemMarginTop: 20,
   margin: 5,
   itemStyle:
   {
@@ -157,9 +158,11 @@ let subtitle =
 {
   text: '<span >* Left click + drag to zoom in graph</span>'
         + '<br>'
-        + '<span style="color: #000000;">* Hold [Shift] to pan with left mouse button</span>'
+        + '<span style="color: #000000;">* Hold <span style="font-weight: bold;">[Shift]</span> to pan with left mouse button</span>'
         + '<br>'
-        + '<span style="color: #000000;">* Click on guild name on legend to toggle visibility</span>',
+        + '<span style="color: #000000;">* Click on guild name on legend to toggle visibility</span>'
+        + '<br>'
+        + '<span style="color: #000000;">* Press <span style="font-weight: bold;">[m]</span> key to switch between <i>line</i> or <i>bar</i> graphs</span>',
   style:
   {
     color: '#000000',
@@ -225,8 +228,9 @@ Highcharts.setOptions(
  *
  * @param chartHtmlContainerId HTML ID to draw chart on
  * @param guildDataReference Guild data processed and packaged as a map
+ * @param isBarGraph Shows bar graph version if true, shows line graph version if false
  */
-export function drawMonthlyContributionGainedGraph(chartHtmlContainerId, guildDataReference)
+export function drawMonthlyContributionGainedGraph(chartHtmlContainerId, guildDataReference, isBarGraph = false)
 {
   // Find the start and end months to loop
   let earliestEntryDate = guildUtilities.findEarliestEntryDate(guildUtilities.getDates(guildDataReference));
@@ -243,12 +247,33 @@ export function drawMonthlyContributionGainedGraph(chartHtmlContainerId, guildDa
   // Initialize the series
   for (let i = 0; i < guilds.length; i++)
   {
-    let seriesEntry =
+    let seriesEntry;
+    if (isBarGraph)
     {
-      name: guilds[i].name,
-      color: guilds[i].color,
-      data: []
-    };
+      seriesEntry =
+      {
+        type: 'column',
+        name: guilds[i].name,
+        color: guilds[i].color,
+        data: []
+      }
+    }
+    else
+    {
+      seriesEntry =
+      {
+        type: 'line',
+        name: guilds[i].name,
+        color: guilds[i].color,
+        marker:
+        {
+          symbol: 'url(' + guilds[i].symbolUrl + ')',
+          width: 22,
+          height: 22
+        },
+        data: []
+      };
+    }
     series.push(seriesEntry);
   }
   

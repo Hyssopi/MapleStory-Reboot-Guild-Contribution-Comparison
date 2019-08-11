@@ -81,6 +81,7 @@ let legend =
   verticalAlign: 'top',
   floating: false,
   padding: 10,
+  itemMarginTop: 0,
   margin: 5,
   itemStyle:
   {
@@ -166,7 +167,7 @@ let subtitle =
 {
   text: '<span >* Left click + drag to zoom in graph</span>'
         + '<br>'
-        + '<span style="color: #000000;">* Hold [Shift] to pan with left mouse button</span>'
+        + '<span style="color: #000000;">* Hold <span style="font-weight: bold;">[Shift]</span> to pan with left mouse button</span>'
         + '<br>'
         + '<span style="color: #000000;">* Click on guild name on legend to toggle visibility</span>',
   style:

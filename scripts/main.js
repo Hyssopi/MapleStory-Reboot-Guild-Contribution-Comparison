@@ -8,9 +8,11 @@ import guildAbout from './guildAbout.js';
 
 
 const GUILD_DATA_JSON_PATH = 'data/guildData.json';
+const GUILD_MONTHLY_CONTRIBUTION_GAINED_GRAPH_CONTAINER_ID = 'monthlyContributionGainedGraphChartContainer';
 
 let guildDataReference = null;
 let isDataTableChronologicalOrder = false;
+let isBarGuildMonthlyContributionGainedGraph = false;
 
 console.info('Reading: \'' + GUILD_DATA_JSON_PATH + '\'');
 fetch(GUILD_DATA_JSON_PATH)
@@ -65,10 +67,9 @@ function setupTabs(guildDataReference)
   document.getElementById("guildDataTableHtmlWrapper").innerHTML = guildDataTableHtml;
   
   // Guild Monthly Contribution Gained Graph
-  chartHtmlContainerId = 'monthlyContributionGainedGraphChartContainer';
-  let guildMonthlyContributionGainedGraphHtml = '<div id=' + chartHtmlContainerId + ' style="width: 99%; height: 90%; position: absolute;"></div>';
+  let guildMonthlyContributionGainedGraphHtml = '<div id=' + GUILD_MONTHLY_CONTRIBUTION_GAINED_GRAPH_CONTAINER_ID + ' style="width: 99%; height: 90%; position: absolute;"></div>';
   document.getElementById("guildMonthlyContributionGainedGraphHtmlWrapper").innerHTML = guildMonthlyContributionGainedGraphHtml;
-  drawMonthlyContributionGainedGraph(chartHtmlContainerId, guildDataReference);
+  drawMonthlyContributionGainedGraph(GUILD_MONTHLY_CONTRIBUTION_GAINED_GRAPH_CONTAINER_ID, guildDataReference, isBarGuildMonthlyContributionGainedGraph);
   
   // Guild About
   let guildAboutHtml = guildAbout();
@@ -81,11 +82,21 @@ function keydownResponse(event)
 {
   if (event.keyCode === 82 || event.keyCode === 83)
   {
-    // Buttons 'r' or 's' pressed
+    // Keys 'r' or 's' pressed
     // Update Guild Data Table order
     isDataTableChronologicalOrder = !isDataTableChronologicalOrder;
     console.info('Reversing Data Table order, now isDataTableChronologicalOrder: ' + isDataTableChronologicalOrder);
+    
     let guildDataTableHtml = guildDataTable(guildDataReference, isDataTableChronologicalOrder);
     document.getElementById("guildDataTableHtmlWrapper").innerHTML = guildDataTableHtml;
+  }
+  if (event.keyCode === 77)
+  {
+    // Key 'm' pressed
+    // Update Guild Monthly Contribution Gained Graph mode: bar or line graph
+    isBarGuildMonthlyContributionGainedGraph = !isBarGuildMonthlyContributionGainedGraph;
+    console.info('Switching Guild Monthly Contribution Gained Graph mode, now isBarGuildMonthlyContributionGainedGraph: ' + isBarGuildMonthlyContributionGainedGraph);
+    
+    drawMonthlyContributionGainedGraph(GUILD_MONTHLY_CONTRIBUTION_GAINED_GRAPH_CONTAINER_ID, guildDataReference, isBarGuildMonthlyContributionGainedGraph);
   }
 }
