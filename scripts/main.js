@@ -1,8 +1,9 @@
 
 import * as guildUtilities from '../util/guildUtilities.js';
-import { drawGraph } from './guildContributionGraph.js';
+import { drawContributionGraph } from './guildContributionGraph.js';
 import guildSummaryBlock from './guildSummaryBlock.js';
 import guildDataTable from './guildDataTable.js';
+import { drawMonthlyContributionGainedGraph } from './guildMonthlyContributionGainedGraph.js';
 import guildAbout from './guildAbout.js';
 
 
@@ -48,10 +49,10 @@ fetch(GUILD_DATA_JSON_PATH)
 function setupTabs(guildDataReference)
 {
   // Guild Contribution Graph
-  let chartHtmlContainerId = 'chartContainer';
+  let chartHtmlContainerId = 'contributionGraphChartContainer';
   let guildContributionGraphHtml = '<div id=' + chartHtmlContainerId + ' style="width: 99%; height: 90%; position: absolute;"></div>';
   document.getElementById("guildContributionGraphHtmlWrapper").innerHTML = guildContributionGraphHtml;
-  drawGraph(chartHtmlContainerId, guildDataReference);
+  drawContributionGraph(chartHtmlContainerId, guildDataReference);
   
   let guildSummaryResults = guildUtilities.calculateGuildSummaryResults(guildDataReference);
   
@@ -62,6 +63,12 @@ function setupTabs(guildDataReference)
   // Guild Data Table
   let guildDataTableHtml = guildDataTable(guildDataReference, isDataTableChronologicalOrder);
   document.getElementById("guildDataTableHtmlWrapper").innerHTML = guildDataTableHtml;
+  
+  // Guild Monthly Contribution Gain Graph
+  chartHtmlContainerId = 'monthlyContributionGainedGraphChartContainer';
+  let guildMonthlyContributionGainedGraphHtml = '<div id=' + chartHtmlContainerId + ' style="width: 99%; height: 90%; position: absolute;"></div>';
+  document.getElementById("guildMonthlyContributionGainedGraphHtmlWrapper").innerHTML = guildMonthlyContributionGainedGraphHtml;
+  drawMonthlyContributionGainedGraph(chartHtmlContainerId, guildDataReference);
   
   // Guild About
   let guildAboutHtml = guildAbout();

@@ -246,7 +246,7 @@ export function calculateGuildSummaryResults(guildDataReference)
     let earlierMonthValidContribution = getGuildEntry(guildDataReference, earlierMonthValidEntryDate, guilds[i].name).contribution;
     
     let averagePerDay = (latestValidContribution - earlierMonthValidContribution) / latestValidEntryDate.diff(earlierMonthValidEntryDate, 'days');
-    if (moment.duration(latestEntryDate.diff(earlierMonthValidEntryDate)) > moment.duration(5, 'weeks'))
+    if (moment.duration(latestEntryDate.diff(earlierMonthValidEntryDate)) > moment.duration(6, 'weeks'))
     {
       console.log('averagePerDay date ranges are too far. latestEntryDate: ' + utilities.getFormattedDate(latestEntryDate) + ', earlierMonthValidEntryDate: ' + utilities.getFormattedDate(earlierMonthValidEntryDate));
       averagePerDay = '-';
@@ -344,6 +344,102 @@ export function calculateGuildDataTableRows(guildDataReference)
   }
   
   return guildDataTableRows;
+}
+
+/**
+ * Calculate and return guild contribution gain data for that month for a given guild, year, and month.
+ *
+ * @param guildDataReference Guild data processed and packaged as a map
+ * @param guildName Name of guild to calculate
+ * @param year Year to calculate
+ * @param month Month to calculate
+ * @return Guild contribution gain data for that month for a given guild, year, and month
+ */
+export function calculateGuildContributionGainedMonth(guildDataReference, guildName, year, month)
+{
+  let earliestValidDate = null;
+  let latestValidDate = null;
+  
+  let earliestContribution = null;
+  let latestContribution = null;
+  
+  let monthDate = utilities.getMomentUtcDate(year, month, 1);
+  
+  // Find the earliest valid entry of the month
+  for (let loopDate = moment(monthDate); loopDate.isBefore(moment(monthDate).add(1, 'months')); loopDate.add(1, 'days'))
+  {
+    let guildEntry = getGuildEntry(guildDataReference, loopDate, guildName);
+    if (guildEntry && utilities.isNumeric(guildEntry.contribution))
+    {
+      earliestValidDate = moment(loopDate);
+      earliestContribution = guildEntry.contribution;
+      break;
+    }
+  }
+  
+  // Find the latest valid entry of the month
+  for (let loopDate = moment(monthDate).add(1, 'months').subtract(1, 'days'); loopDate.isSameOrAfter(monthDate); loopDate.subtract(1, 'days'))
+  {
+    let guildEntry = getGuildEntry(guildDataReference, loopDate, guildName);
+    if (guildEntry && utilities.isNumeric(guildEntry.contribution))
+    {
+      latestValidDate = moment(loopDate);
+      latestContribution = guildEntry.contribution;
+      break;
+    }
+  }
+  
+  // Check date ranges, then calculate interpolatedContributionGained
+  let monthlyAveragedContributionGainedPerDay = null;
+  let interpolatedContributionGained = null;
+  if (earliestValidDate && latestValidDate && latestValidDate.isBefore(earliestValidDate))
+  {
+    console.log('GuildContributionGainedMonth, guildName: ' + guildName + ', latestValidDate: ' + utilities.getFormattedDate(latestValidDate) + ' is before earliestValidDate: ' + utilities.getFormattedDate(earliestValidDate));
+    earliestValidDate = null;
+    latestValidDate = null;
+    earliestContribution = null;
+    latestContribution = null;
+  }
+  
+  if (earliestValidDate && latestValidDate && moment.duration(latestValidDate.diff(earliestValidDate)) < moment.duration(2, 'weeks'))
+  {
+    console.log('GuildContributionGainedMonth, guildName: ' + guildName + ', date ranges are too close. latestValidDate: ' + utilities.getFormattedDate(latestValidDate) + ', earliestValidDate: ' + utilities.getFormattedDate(earliestValidDate));
+    earliestValidDate = null;
+    latestValidDate = null;
+    earliestContribution = null;
+    latestContribution = null;
+  }
+  
+  if (earliestValidDate && latestValidDate && (earliestValidDate.date() > 7 || latestValidDate.date() < monthDate.daysInMonth() - 7))
+  {
+    console.log('GuildContributionGainedMonth, guildName: ' + guildName + ', earliestValidDate and/or latestEntryDate have too much gap, need at least a week. latestValidDate: ' + utilities.getFormattedDate(latestValidDate) + ', earliestValidDate: ' + utilities.getFormattedDate(earliestValidDate));
+    earliestValidDate = null;
+    latestValidDate = null;
+    earliestContribution = null;
+    latestContribution = null;
+  }
+  
+  if (earliestValidDate && latestValidDate && earliestContribution && latestContribution)
+  {
+    monthlyAveragedContributionGainedPerDay = (latestContribution - earliestContribution) / latestValidDate.diff(earliestValidDate, 'days');
+    
+    interpolatedContributionGained = (monthDate.daysInMonth() - 1) * monthlyAveragedContributionGainedPerDay;
+  }
+  
+  let guildContributionGainedMonth =
+  {
+    year: year,
+    month: month,
+    guildName: guildName,
+    earliestValidDate: earliestValidDate,
+    latestValidDate: latestValidDate,
+    earliestContribution: earliestContribution,
+    latestContribution: latestContribution,
+    monthlyAveragedContributionGainedPerDay: monthlyAveragedContributionGainedPerDay,
+    interpolatedContributionGained: interpolatedContributionGained
+  };
+  
+  return guildContributionGainedMonth;
 }
 
 /**

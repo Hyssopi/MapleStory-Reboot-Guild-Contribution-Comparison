@@ -6,7 +6,7 @@ import * as guildUtilities from '../util/guildUtilities.js';
 
 let chart =
 {
-  type: 'line',
+  type: 'column',
   plotBorderWidth: 0,
   plotShadow: false,
   backgroundColor: '#DCDCDC',
@@ -57,14 +57,9 @@ let credits =
   enabled: false
 }
 
-let time =
-{
-  useUTC: true
-}
-
 let title =
 {
-  text: 'MapleStory Top Reboot Guild Contribution',
+  text: 'Total Guild Contribution Gained Each Month',
   style:
   {
     color: '#000000',
@@ -101,14 +96,12 @@ let legend =
 
 let xAxis =
 {
-  type: 'datetime',
   lineWidth: 1,
   lineColor: '#000000',
   gridLineWidth: 1,
   gridLineColor: '#C0C0C0',
   labels:
   {
-    format: '{value: %d %b %Y}',
     style:
     {
       color: '#000000',
@@ -118,15 +111,13 @@ let xAxis =
     },
     overflow: 'justify'
   },
-  tickPixelInterval: 200,
   title:
   {
     text: null
   },
   crosshair:
   {
-    width: 2,
-    color: 'gray'
+    color: 'rgba(204, 214, 235, 0.5)'
   }
 }
 
@@ -184,7 +175,7 @@ let subtitle =
 let tooltip =
 {
   headerFormat: '<span style="font-size: 10px;"><strong>{point.key}</strong></span><br/>',
-  crosshairs: true,
+  valueDecimals: 0,
   shared: true,
   backgroundColor:
   {
@@ -207,14 +198,17 @@ let plotOptions =
     {
       inactive:
       {
-        opacity: 0.2
-      },
-      hover:
-      {
-        lineWidthPlus: 0
+        opacity: 0.15
       }
     },
     turboThreshold: 0
+  },
+  column:
+  {
+    borderWidth: 1,
+    borderColor: 'black',
+    pointWidth: 20,
+    groupPadding: 0.15
   }
 }
 
@@ -227,84 +221,66 @@ Highcharts.setOptions(
 });
 
 /**
- * Extract data from guildDataReference and create the list of series. Each series entry being a guild entry.
- *
- * @param guildDataReference Guild data processed and packaged as a map
- * @return List of series with data extracted from guildDataReference
- */
-function generateSeries(guildDataReference)
-{
-  let series = [];
-  let seriesGuildEntryReferenceTable = [];
-  let guilds = guildUtilities.getGuilds(guildDataReference);
-  for (let i = 0; i < guilds.length; i++)
-  {
-    if (guilds[i])
-    {
-      // Add in series entry for each guild into the series list for each guild
-      let seriesGuildEntry =
-      {
-        name: guilds[i].name,
-        color: guilds[i].color,
-        marker:
-        {
-          symbol: 'url(' + guilds[i].symbolUrl + ')',
-          width: 22,
-          height: 22
-        },
-        data: []
-      }
-      series.push(seriesGuildEntry);
-      seriesGuildEntryReferenceTable[guilds[i].name] = seriesGuildEntry;
-    }
-  }
-  
-  let dates = guildUtilities.getDates(guildDataReference);
-  for (let i = 0; i < dates.length; i++)
-  {
-    for (let j = 0; j < guilds.length; j++)
-    {
-      let guildEntry = guildUtilities.getGuildEntry(guildDataReference, dates[i], guilds[j].name);
-      if (!guildEntry.contribution)
-      {
-        continue;
-      }
-      
-      let seriesDataEntry =
-      {
-        x: Date.UTC(dates[i].year(), dates[i].month(), dates[i].date()),
-        y: guildEntry.contribution
-      }
-      seriesGuildEntryReferenceTable[guilds[j].name].data.push(seriesDataEntry);
-    }
-  }
-  
-  // Sort the data points of a guild by date
-  for (let i = 0; i < series.length; i++)
-  {
-    series[i].data.sort(function(seriesDataEntry1, seriesDataEntry2)
-    {
-      return seriesDataEntry1.x - seriesDataEntry2.x;
-    });
-  }
-  
-  return series;
-}
-
-/**
- * Extracts data from guildDataReference and draws the chart to the HTML container ID.
+ * Extracts data from guildDataReference, calculates guild contribution gained each month for each guild, and draws the chart to the HTML container ID.
  *
  * @param chartHtmlContainerId HTML ID to draw chart on
  * @param guildDataReference Guild data processed and packaged as a map
  */
-export function drawContributionGraph(chartHtmlContainerId, guildDataReference)
+export function drawMonthlyContributionGainedGraph(chartHtmlContainerId, guildDataReference)
 {
-  let series = generateSeries(guildDataReference);
+  // Find the start and end months to loop
+  let earliestEntryDate = guildUtilities.findEarliestEntryDate(guildUtilities.getDates(guildDataReference));
+  let latestEntryDate = guildUtilities.findLatestEntryDate(guildUtilities.getDates(guildDataReference));
+  
+  // .month() indexes are from 0 to 11
+  let startMonthDate = utilities.getMomentUtcDate(earliestEntryDate.year(), earliestEntryDate.month() + 1, 1);
+  let endMonthDate = utilities.getMomentUtcDate(latestEntryDate.year(), latestEntryDate.month() + 1, 1);
+  
+  let guilds = guildUtilities.getGuilds(guildDataReference);
+  let series = [];
+  xAxis.categories = [];
+  
+  // Initialize the series
+  for (let i = 0; i < guilds.length; i++)
+  {
+    let seriesEntry =
+    {
+      name: guilds[i].name,
+      color: guilds[i].color,
+      data: []
+    };
+    series.push(seriesEntry);
+  }
+  
+  // Calculate guild contribution gained each month for each guild, looped through by month
+  for (let loopDate = moment(startMonthDate); loopDate.isSameOrBefore(endMonthDate); loopDate.add(1, 'months'))
+  {
+    xAxis.categories.push(moment(loopDate).format('MMMM YYYY'));
+    for (let i = 0; i < guilds.length; i++)
+    {
+      let guildContributionGainedMonth = guildUtilities.calculateGuildContributionGainedMonth(guildDataReference, guilds[i].name, loopDate.year(), loopDate.month() + 1);
+      
+      if (series[i].name === guilds[i].name)
+      {
+        series[i].data.push(guildContributionGainedMonth.interpolatedContributionGained);
+      }
+      else
+      {
+        console.warn('Mismatch series indexes not corresponding to the correct guild, should not happen');
+      }
+    }
+  }
+  
+  console.info('drawMonthlyContributionGainedGraph:');
+  console.log('xAxis.categories:');
+  console.log(xAxis.categories);
+  console.log('series');
+  console.log(series);
+  
   let graphChart = Highcharts.chart(chartHtmlContainerId,
   {
     chart: chart,
     credits: credits,
-    time: time,
     title: title,
     legend: legend,
     xAxis: xAxis,
@@ -315,13 +291,15 @@ export function drawContributionGraph(chartHtmlContainerId, guildDataReference)
     series: series
   });
   
-  // Zoom in chart to a time frame of one month prior to latest date to latest date
-  let latestEntryDate = guildUtilities.findLatestEntryDate(guildUtilities.getDates(guildDataReference));
-  let oneMonthPriorLatestEntryDate = moment(latestEntryDate).subtract(1, 'months');
-  graphChart.xAxis[0].zoom(oneMonthPriorLatestEntryDate.valueOf(), latestEntryDate.valueOf());
+  /*
+  // BUG: Reset zoom button is messed up on first load up, disabled until fixed
+  // Zoom in chart to show the most recent months in year to date
+  graphChart.xAxis[0].zoom(xAxis.categories.length - 13, xAxis.categories.length - 1);
   graphChart.redraw();
   if (!graphChart.resetZoomButton)
   {
     graphChart.showResetZoom();
   }
+  */
+  
 }
