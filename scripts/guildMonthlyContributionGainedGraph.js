@@ -59,7 +59,7 @@ let credits =
 
 let title =
 {
-  text: 'Total Guild Contribution Gained Each Month',
+  text: 'Total Guild Contribution Gained By Month',
   style:
   {
     color: '#000000',

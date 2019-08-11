@@ -64,7 +64,7 @@ function setupTabs(guildDataReference)
   let guildDataTableHtml = guildDataTable(guildDataReference, isDataTableChronologicalOrder);
   document.getElementById("guildDataTableHtmlWrapper").innerHTML = guildDataTableHtml;
   
-  // Guild Monthly Contribution Gain Graph
+  // Guild Monthly Contribution Gained Graph
   chartHtmlContainerId = 'monthlyContributionGainedGraphChartContainer';
   let guildMonthlyContributionGainedGraphHtml = '<div id=' + chartHtmlContainerId + ' style="width: 99%; height: 90%; position: absolute;"></div>';
   document.getElementById("guildMonthlyContributionGainedGraphHtmlWrapper").innerHTML = guildMonthlyContributionGainedGraphHtml;

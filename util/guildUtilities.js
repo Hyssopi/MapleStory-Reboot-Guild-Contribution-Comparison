@@ -347,13 +347,13 @@ export function calculateGuildDataTableRows(guildDataReference)
 }
 
 /**
- * Calculate and return guild contribution gain data for that month for a given guild, year, and month.
+ * Calculate and return guild contribution gained data for that month for a given guild, year, and month.
  *
  * @param guildDataReference Guild data processed and packaged as a map
  * @param guildName Name of guild to calculate
  * @param year Year to calculate
  * @param month Month to calculate
- * @return Guild contribution gain data for that month for a given guild, year, and month
+ * @return Guild contribution gained data for that month for a given guild, year, and month
  */
 export function calculateGuildContributionGainedMonth(guildDataReference, guildName, year, month)
 {
