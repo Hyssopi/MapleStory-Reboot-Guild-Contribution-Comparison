@@ -237,9 +237,10 @@ Highcharts.setOptions(
  *
  * @param chartHtmlContainerId HTML ID to draw chart on
  * @param guildDataReference Guild data processed and packaged as a map
+ * @param showAllGuilds Ignore guild visible flag and process all guilds
  * @param isBarGraph Shows bar graph version if true, shows line graph version if false
  */
-export function drawMonthlyContributionGainedGraph(chartHtmlContainerId, guildDataReference, isBarGraph = false)
+export function drawMonthlyContributionGainedGraph(chartHtmlContainerId, guildDataReference, showAllGuilds, isBarGraph = false)
 {
   // Find the start and end months to loop
   let earliestEntryDate = guildUtilities.findEarliestEntryDate(guildUtilities.getDates(guildDataReference));
@@ -256,52 +257,47 @@ export function drawMonthlyContributionGainedGraph(chartHtmlContainerId, guildDa
   // Initialize the series
   for (let i = 0; i < guilds.length; i++)
   {
-    let seriesEntry;
-    if (isBarGraph)
+    if (showAllGuilds || guilds[i].visible)
     {
-      seriesEntry =
+      let seriesEntry;
+      if (isBarGraph)
       {
-        type: 'column',
-        name: guilds[i].name,
-        color: guilds[i].color,
-        data: []
-      }
-    }
-    else
-    {
-      seriesEntry =
-      {
-        type: 'line',
-        name: guilds[i].name,
-        color: guilds[i].color,
-        marker:
+        seriesEntry =
         {
-          symbol: 'url(' + guilds[i].symbolUrl + ')',
-          width: 22,
-          height: 22
-        },
-        data: []
-      };
+          type: 'column',
+          name: guilds[i].name,
+          color: guilds[i].color,
+          data: []
+        }
+      }
+      else
+      {
+        seriesEntry =
+        {
+          type: 'line',
+          name: guilds[i].name,
+          color: guilds[i].color,
+          marker:
+          {
+            symbol: 'url(' + guilds[i].symbolUrl + ')',
+            width: 22,
+            height: 22
+          },
+          data: []
+        };
+      }
+      series.push(seriesEntry);
     }
-    series.push(seriesEntry);
   }
   
   // Calculate guild contribution gained each month for each guild, looped through by month
   for (let loopDate = moment(startMonthDate); loopDate.isSameOrBefore(endMonthDate); loopDate.add(1, 'months'))
   {
     xAxis.categories.push(moment(loopDate).format('MMMM YYYY'));
-    for (let i = 0; i < guilds.length; i++)
+    for (let i = 0; i < series.length; i++)
     {
-      let guildContributionGainedMonth = guildUtilities.calculateGuildContributionGainedMonth(guildDataReference, guilds[i].name, loopDate.year(), loopDate.month() + 1);
-      
-      if (series[i].name === guilds[i].name)
-      {
-        series[i].data.push(guildContributionGainedMonth.interpolatedContributionGained);
-      }
-      else
-      {
-        console.warn('Mismatch series indexes not corresponding to the correct guild, should not happen');
-      }
+      let guildContributionGainedMonth = guildUtilities.calculateGuildContributionGainedMonth(guildDataReference, series[i].name, loopDate.year(), loopDate.month() + 1);
+      series[i].data.push(guildContributionGainedMonth.interpolatedContributionGained);
     }
   }
   

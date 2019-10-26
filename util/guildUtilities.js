@@ -225,51 +225,55 @@ export function findHighestContributionAmount(guildDataReference, guildName)
  * Calculate and return processed guild data packaged as a neat object.
  *
  * @param guildDataReference Guild data processed and packaged as a map
+ * @param showAllGuilds Ignore guild visible flag and process all guilds
  * @return Processed guild data
  */
-export function calculateGuildSummaryResults(guildDataReference)
+export function calculateGuildSummaryResults(guildDataReference, showAllGuilds)
 {
   let guildSummaryResults = [];
   let guilds = getGuilds(guildDataReference);
   let latestEntryDate = findLatestEntryDate(getDates(guildDataReference));
   for (let i = 0; i < guilds.length; i++)
   {
-    let latestValidEntryDate = findLatestValidContributionEntryDate(guildDataReference, guilds[i].name);
-    let latestValidContribution = getGuildEntry(guildDataReference, latestValidEntryDate, guilds[i].name).contribution;
-    
-    let earlierMonthValidEntryDate = findEarlierMonthValidEntryDate(latestEntryDate, guildDataReference, guilds[i].name);
-    if (!earlierMonthValidEntryDate)
+    if (showAllGuilds || guilds[i].visible)
     {
-      console.log('earlierMonthValidEntryDate is null for ' + guilds[i].name + ', setting it to latestValidEntryDate so it will be caught later as invalid average calculation');
-      earlierMonthValidEntryDate = moment(latestValidEntryDate);
+      let latestValidEntryDate = findLatestValidContributionEntryDate(guildDataReference, guilds[i].name);
+      let latestValidContribution = getGuildEntry(guildDataReference, latestValidEntryDate, guilds[i].name).contribution;
+      
+      let earlierMonthValidEntryDate = findEarlierMonthValidEntryDate(latestEntryDate, guildDataReference, guilds[i].name);
+      if (!earlierMonthValidEntryDate)
+      {
+        console.log('earlierMonthValidEntryDate is null for ' + guilds[i].name + ', setting it to latestValidEntryDate so it will be caught later as invalid average calculation');
+        earlierMonthValidEntryDate = moment(latestValidEntryDate);
+      }
+      let earlierMonthValidContribution = getGuildEntry(guildDataReference, earlierMonthValidEntryDate, guilds[i].name).contribution;
+      
+      let averagePerDay = (latestValidContribution - earlierMonthValidContribution) / latestValidEntryDate.diff(earlierMonthValidEntryDate, 'days');
+      if (moment.duration(latestEntryDate.diff(earlierMonthValidEntryDate)) > moment.duration(6, 'weeks'))
+      {
+        console.log('averagePerDay date ranges are too far. latestEntryDate: ' + utilities.getFormattedDate(latestEntryDate) + ', earlierMonthValidEntryDate: ' + utilities.getFormattedDate(earlierMonthValidEntryDate));
+        averagePerDay = '-';
+      }
+      else if (moment.duration(latestValidEntryDate.diff(earlierMonthValidEntryDate)) < moment.duration(2, 'weeks'))
+      {
+        console.log('averagePerDay date ranges are too close. latestValidEntryDate: ' + utilities.getFormattedDate(latestValidEntryDate) + ', earlierMonthValidEntryDate: ' + utilities.getFormattedDate(earlierMonthValidEntryDate));
+        averagePerDay = '-';
+      }
+      
+      let guildSummaryResult =
+      {
+        guildName: guilds[i].name,
+        guildColor: guilds[i].color,
+        guildBackgroundColor: guilds[i].backgroundColor,
+        guildSymbolUrl: guilds[i].symbolUrl,
+        latestValidEntryDate: latestValidEntryDate,
+        latestValidContribution: latestValidContribution,
+        earlierMonthValidEntryDate: earlierMonthValidEntryDate,
+        earlierMonthValidContribution: earlierMonthValidContribution,
+        averagePerDay: averagePerDay
+      }
+      guildSummaryResults.push(guildSummaryResult);
     }
-    let earlierMonthValidContribution = getGuildEntry(guildDataReference, earlierMonthValidEntryDate, guilds[i].name).contribution;
-    
-    let averagePerDay = (latestValidContribution - earlierMonthValidContribution) / latestValidEntryDate.diff(earlierMonthValidEntryDate, 'days');
-    if (moment.duration(latestEntryDate.diff(earlierMonthValidEntryDate)) > moment.duration(6, 'weeks'))
-    {
-      console.log('averagePerDay date ranges are too far. latestEntryDate: ' + utilities.getFormattedDate(latestEntryDate) + ', earlierMonthValidEntryDate: ' + utilities.getFormattedDate(earlierMonthValidEntryDate));
-      averagePerDay = '-';
-    }
-    else if (moment.duration(latestValidEntryDate.diff(earlierMonthValidEntryDate)) < moment.duration(2, 'weeks'))
-    {
-      console.log('averagePerDay date ranges are too close. latestValidEntryDate: ' + utilities.getFormattedDate(latestValidEntryDate) + ', earlierMonthValidEntryDate: ' + utilities.getFormattedDate(earlierMonthValidEntryDate));
-      averagePerDay = '-';
-    }
-    
-    let guildSummaryResult =
-    {
-      guildName: guilds[i].name,
-      guildColor: guilds[i].color,
-      guildBackgroundColor: guilds[i].backgroundColor,
-      guildSymbolUrl: guilds[i].symbolUrl,
-      latestValidEntryDate: latestValidEntryDate,
-      latestValidContribution: latestValidContribution,
-      earlierMonthValidEntryDate: earlierMonthValidEntryDate,
-      earlierMonthValidContribution: earlierMonthValidContribution,
-      averagePerDay: averagePerDay
-    }
-    guildSummaryResults.push(guildSummaryResult);
   }
   
   return guildSummaryResults;
@@ -280,9 +284,10 @@ export function calculateGuildSummaryResults(guildDataReference)
  * Each row contains a date and a list of all the guilds and each guild data entry having contribution/member count, and contribution/member count difference from last valid entry.
  *
  * @param guildDataReference Guild data processed and packaged as a map
+ * @param showAllGuilds Ignore guild visible flag and process all guilds
  * @return Processed guild data table rows
  */
-export function calculateGuildDataTableRows(guildDataReference)
+export function calculateGuildDataTableRows(guildDataReference, showAllGuilds)
 {
   let guildDataTableRows = [];
   
@@ -304,41 +309,44 @@ export function calculateGuildDataTableRows(guildDataReference)
     
     for (let i = 0; i < guilds.length; i++)
     {
-      let guildEntry = getGuildEntry(guildDataReference, loopDate, guilds[i].name);
-      
-      let contribution = guildEntry.contribution ? guildEntry.contribution : '-';
-      let memberCount = guildEntry.memberCount ? guildEntry.memberCount : '-';
-      
-      // Find the averaged contribution given the contribution of the current given date and the previous valid contribution
-      let contributionDifferenceFromLastEntryAveraged = '-';
-      if (utilities.isNumeric(contribution))
+      if (showAllGuilds || guilds[i].visible)
       {
-        if (previousValidGuildContributionDates[i])
+        let guildEntry = getGuildEntry(guildDataReference, loopDate, guilds[i].name);
+        
+        let contribution = guildEntry.contribution ? guildEntry.contribution : '-';
+        let memberCount = guildEntry.memberCount ? guildEntry.memberCount : '-';
+        
+        // Find the averaged contribution given the contribution of the current given date and the previous valid contribution
+        let contributionDifferenceFromLastEntryAveraged = '-';
+        if (utilities.isNumeric(contribution))
         {
-          contributionDifferenceFromLastEntryAveraged = (contribution - getGuildEntry(guildDataReference, previousValidGuildContributionDates[i], guilds[i].name).contribution) / loopDate.diff(previousValidGuildContributionDates[i], 'days');
+          if (previousValidGuildContributionDates[i])
+          {
+            contributionDifferenceFromLastEntryAveraged = (contribution - getGuildEntry(guildDataReference, previousValidGuildContributionDates[i], guilds[i].name).contribution) / loopDate.diff(previousValidGuildContributionDates[i], 'days');
+          }
+          previousValidGuildContributionDates[i] = moment(loopDate);
         }
-        previousValidGuildContributionDates[i] = moment(loopDate);
-      }
-      
-      let memberCountDifferenceFromLastEntry = '-';
-      if (utilities.isNumeric(memberCount))
-      {
-        if (previousValidGuildMemberCountDates[i])
+        
+        let memberCountDifferenceFromLastEntry = '-';
+        if (utilities.isNumeric(memberCount))
         {
-          memberCountDifferenceFromLastEntry = memberCount - getGuildEntry(guildDataReference, previousValidGuildMemberCountDates[i], guilds[i].name).memberCount;
+          if (previousValidGuildMemberCountDates[i])
+          {
+            memberCountDifferenceFromLastEntry = memberCount - getGuildEntry(guildDataReference, previousValidGuildMemberCountDates[i], guilds[i].name).memberCount;
+          }
+          previousValidGuildMemberCountDates[i] = moment(loopDate);
         }
-        previousValidGuildMemberCountDates[i] = moment(loopDate);
+        
+        guildDataTableRow.guilds.push(
+        {
+          name: guilds[i].name,
+          backgroundColor: guilds[i].backgroundColor,
+          contribution: contribution,
+          contributionDifferenceFromLastEntryAveraged: contributionDifferenceFromLastEntryAveraged,
+          memberCount: memberCount,
+          memberCountDifferenceFromLastEntry: memberCountDifferenceFromLastEntry
+        });
       }
-      
-      guildDataTableRow.guilds.push(
-      {
-        name: guilds[i].name,
-        backgroundColor: guilds[i].backgroundColor,
-        contribution: contribution,
-        contributionDifferenceFromLastEntryAveraged: contributionDifferenceFromLastEntryAveraged,
-        memberCount: memberCount,
-        memberCountDifferenceFromLastEntry: memberCountDifferenceFromLastEntry
-      });
     }
     guildDataTableRows.push(guildDataTableRow);
   }

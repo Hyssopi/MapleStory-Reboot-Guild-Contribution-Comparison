@@ -11,6 +11,7 @@ const GUILD_DATA_JSON_PATH = 'data/guildData.json';
 const GUILD_MONTHLY_CONTRIBUTION_GAINED_GRAPH_CONTAINER_ID = 'monthlyContributionGainedGraphChartContainer';
 
 let guildDataReference = null;
+let showAllGuilds = false;
 let isDataTableChronologicalOrder = false;
 let isBarGuildMonthlyContributionGainedGraph = false;
 
@@ -34,7 +35,7 @@ fetch(GUILD_DATA_JSON_PATH)
     
     guildDataReference = guildUtilities.calculateGuildDataReference(guildData);
     console.log(guildDataReference);
-    setupTabs(guildDataReference);
+    setupTabs(guildDataReference, showAllGuilds);
     
     guildUtilities.printDebug(guildData);
   })
@@ -47,29 +48,30 @@ fetch(GUILD_DATA_JSON_PATH)
  * Handles and setup all the main page's tabs and put it to the HTML.
  *
  * @param guildDataReference Guild data processed and packaged as a map
+ * @param showAllGuilds Ignore guild visible flag and process all guilds
  */
-function setupTabs(guildDataReference)
+function setupTabs(guildDataReference, showAllGuilds)
 {
   // Guild Contribution Graph
   let chartHtmlContainerId = 'contributionGraphChartContainer';
   let guildContributionGraphHtml = '<div id=' + chartHtmlContainerId + ' style="width: 99%; height: 90%; position: absolute;"></div>';
   document.getElementById("guildContributionGraphHtmlWrapper").innerHTML = guildContributionGraphHtml;
-  drawContributionGraph(chartHtmlContainerId, guildDataReference);
+  drawContributionGraph(chartHtmlContainerId, guildDataReference, showAllGuilds);
   
-  let guildSummaryResults = guildUtilities.calculateGuildSummaryResults(guildDataReference);
+  let guildSummaryResults = guildUtilities.calculateGuildSummaryResults(guildDataReference, showAllGuilds);
   
   // Guild Summary Block
   let guildSummaryBlockHtml = guildSummaryBlock(guildSummaryResults);
   document.getElementById("guildSummaryBlockHtmlWrapper").innerHTML = guildSummaryBlockHtml;
   
   // Guild Data Table
-  let guildDataTableHtml = guildDataTable(guildDataReference, isDataTableChronologicalOrder);
+  let guildDataTableHtml = guildDataTable(guildDataReference, showAllGuilds, isDataTableChronologicalOrder);
   document.getElementById("guildDataTableHtmlWrapper").innerHTML = guildDataTableHtml;
   
   // Guild Monthly Contribution Gained Graph
   let guildMonthlyContributionGainedGraphHtml = '<div id=' + GUILD_MONTHLY_CONTRIBUTION_GAINED_GRAPH_CONTAINER_ID + ' style="width: 99%; height: 90%; position: absolute;"></div>';
   document.getElementById("guildMonthlyContributionGainedGraphHtmlWrapper").innerHTML = guildMonthlyContributionGainedGraphHtml;
-  drawMonthlyContributionGainedGraph(GUILD_MONTHLY_CONTRIBUTION_GAINED_GRAPH_CONTAINER_ID, guildDataReference, isBarGuildMonthlyContributionGainedGraph);
+  drawMonthlyContributionGainedGraph(GUILD_MONTHLY_CONTRIBUTION_GAINED_GRAPH_CONTAINER_ID, guildDataReference, showAllGuilds, isBarGuildMonthlyContributionGainedGraph);
   
   // Guild About
   let guildAboutHtml = guildAbout();
@@ -80,6 +82,12 @@ window.addEventListener("keydown", keydownResponse, false);
 
 function keydownResponse(event)
 {
+  if (event.keyCode === 72)
+  {
+    // Key 'h' pressed
+    showAllGuilds = !showAllGuilds;
+    setupTabs(guildDataReference, showAllGuilds);
+  }
   if (event.keyCode === 82 || event.keyCode === 83)
   {
     // Keys 'r' or 's' pressed
@@ -97,6 +105,6 @@ function keydownResponse(event)
     isBarGuildMonthlyContributionGainedGraph = !isBarGuildMonthlyContributionGainedGraph;
     console.info('Switching Guild Monthly Contribution Gained Graph mode, now isBarGuildMonthlyContributionGainedGraph: ' + isBarGuildMonthlyContributionGainedGraph);
     
-    drawMonthlyContributionGainedGraph(GUILD_MONTHLY_CONTRIBUTION_GAINED_GRAPH_CONTAINER_ID, guildDataReference, isBarGuildMonthlyContributionGainedGraph);
+    drawMonthlyContributionGainedGraph(GUILD_MONTHLY_CONTRIBUTION_GAINED_GRAPH_CONTAINER_ID, guildDataReference, showAllGuilds, isBarGuildMonthlyContributionGainedGraph);
   }
 }

@@ -7,34 +7,45 @@ import * as guildUtilities from '../util/guildUtilities.js';
  * Generates HTML for guild data table using guildDataReference.
  *
  * @param guildDataReference Guild data processed and packaged as a map
+ * @param showAllGuilds Ignore guild visible flag and process all guilds
  * @param isChronologicalOrder Order of the guild data rows in either: ascending order/oldest first (chronological order) or descending order/newest first (reverse chronological order)
  * @return HTML code to generate guild data table
  */
-export default function(guildDataReference, isChronologicalOrder)
+export default function(guildDataReference, showAllGuilds, isChronologicalOrder)
 {
   let html = '';
   
   html += '<table align="center" style="border-collapse: collapse;">';
   
   let guilds = guildUtilities.getGuilds(guildDataReference);
+  // Make a deep copy of the guilds array
+  let guildsFiltered = JSON.parse(JSON.stringify(guilds));
+  // Remove guilds that should not be shown
+  for (let i = guildsFiltered.length - 1; i >= 0; i--)
+  {
+    if (!showAllGuilds && !guildsFiltered[i].visible)
+    {
+      guildsFiltered.splice(i, 1);
+    }
+  }
   
   html += '<thead>';
-  html += generateTableHeader(guilds);
+  html += generateTableHeader(guildsFiltered);
   html += '</thead>';
   
   // Creating color range for a specific guild based on its total lowest and highest contribution.
-  let colorScales = [];
-  for (let i = 0; i < guilds.length; i++)
+  let colorScales = new Map();
+  for (let i = 0; i < guildsFiltered.length; i++)
   {
-    let lowestContribution = guildUtilities.findLowestContributionAmount(guildDataReference, guilds[i].name);
-    let highestContribution = guildUtilities.findHighestContributionAmount(guildDataReference, guilds[i].name);
+    let lowestContribution = guildUtilities.findLowestContributionAmount(guildDataReference, guildsFiltered[i].name);
+    let highestContribution = guildUtilities.findHighestContributionAmount(guildDataReference, guildsFiltered[i].name);
     let colorScale = chroma.scale(['red', 'yellow', '#228B22']).domain([lowestContribution, highestContribution]);
-    colorScales.push(colorScale);
+    colorScales.set(guildsFiltered[i].name, colorScale);
   }
   
   html += '<tbody class="hoverRowHighlight">';
   let tableRowHtmls = [];
-  let guildDataTableRows = guildUtilities.calculateGuildDataTableRows(guildDataReference);
+  let guildDataTableRows = guildUtilities.calculateGuildDataTableRows(guildDataReference, showAllGuilds);
   // guildDataTableRows should already be sorted in chronological order
   for (let i = 0; i < guildDataTableRows.length; i++)
   {
@@ -57,7 +68,7 @@ export default function(guildDataReference, isChronologicalOrder)
   html += '</tbody>';
   
   html += '<thead>';
-  html += generateTableFooter(guilds);
+  html += generateTableFooter(guildsFiltered);
   html += '</thead>';
   
   html += '</table>';
@@ -105,7 +116,7 @@ function generateTableHeader(guilds)
  *
  * @param date Date for this particular row
  * @param guilds Contents of the guilds from guildDataTableRows
- * @param colorScales Chroma colorscale ranges, each index specifies a different guild in the same order as guilds parameter
+ * @param colorScales Chroma colorscale ranges as value in map, guild name is the key
  * @return HTML code to generate guild data table row
  */
 function generateTableRow(date, guilds, colorScales)
@@ -118,7 +129,7 @@ function generateTableRow(date, guilds, colorScales)
     let memberCount = guilds[i].memberCount;
     let memberCountDifferenceFromLastEntry = guilds[i].memberCountDifferenceFromLastEntry;
     
-    let contributionBackgroundColor = utilities.isNumeric(contribution) ? colorScales[i](contribution).hex() : guilds[i].backgroundColor;
+    let contributionBackgroundColor = utilities.isNumeric(contribution) ? colorScales.get(guilds[i].name)(contribution).hex() : guilds[i].backgroundColor;
     
     let memberCountDifferenceFromLastEntryIconHtml = `<i class="material-icons" style="color: ${guilds[i].backgroundColor};">remove</i>`;
     if (memberCountDifferenceFromLastEntry > 0)

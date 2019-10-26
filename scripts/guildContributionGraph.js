@@ -240,16 +240,17 @@ Highcharts.setOptions(
  * Extract data from guildDataReference and create the list of series. Each series entry being a guild entry.
  *
  * @param guildDataReference Guild data processed and packaged as a map
+ * @param showAllGuilds Ignore guild visible flag and process all guilds
  * @return List of series with data extracted from guildDataReference
  */
-function generateSeries(guildDataReference)
+function generateSeries(guildDataReference, showAllGuilds)
 {
   let series = [];
   let seriesGuildEntryReferenceTable = [];
   let guilds = guildUtilities.getGuilds(guildDataReference);
   for (let i = 0; i < guilds.length; i++)
   {
-    if (guilds[i])
+    if (guilds[i] && (showAllGuilds || guilds[i].visible))
     {
       // Add in series entry for each guild into the series list for each guild
       let seriesGuildEntry =
@@ -272,9 +273,9 @@ function generateSeries(guildDataReference)
   let dates = guildUtilities.getDates(guildDataReference);
   for (let i = 0; i < dates.length; i++)
   {
-    for (let j = 0; j < guilds.length; j++)
+    for (let j = 0; j < series.length; j++)
     {
-      let guildEntry = guildUtilities.getGuildEntry(guildDataReference, dates[i], guilds[j].name);
+      let guildEntry = guildUtilities.getGuildEntry(guildDataReference, dates[i], series[j].name);
       if (!guildEntry.contribution)
       {
         continue;
@@ -285,7 +286,7 @@ function generateSeries(guildDataReference)
         x: Date.UTC(dates[i].year(), dates[i].month(), dates[i].date()),
         y: guildEntry.contribution
       }
-      seriesGuildEntryReferenceTable[guilds[j].name].data.push(seriesDataEntry);
+      seriesGuildEntryReferenceTable[series[j].name].data.push(seriesDataEntry);
     }
   }
   
@@ -306,10 +307,11 @@ function generateSeries(guildDataReference)
  *
  * @param chartHtmlContainerId HTML ID to draw chart on
  * @param guildDataReference Guild data processed and packaged as a map
+ * @param showAllGuilds Ignore guild visible flag and process all guilds
  */
-export function drawContributionGraph(chartHtmlContainerId, guildDataReference)
+export function drawContributionGraph(chartHtmlContainerId, guildDataReference, showAllGuilds)
 {
-  let series = generateSeries(guildDataReference);
+  let series = generateSeries(guildDataReference, showAllGuilds);
   
   // TODO: Find a better way to improve adding bolded interval axis
   // Adding plot lines to bold certain interval axis

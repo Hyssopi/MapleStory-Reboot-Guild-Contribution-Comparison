@@ -14,6 +14,8 @@ export default function()
       
       <div>* Right click webpage -> Inspect -> Console, to view debug information.</div>
       
+      <div>* Press <span style="font-weight: bold;">[h]</span> key to toggle whether to show all guilds or just default visible guilds. Does <span style="font-style: italic;">not</span> show all guilds by default.</div>
+      
       <div>* Press <span style="font-weight: bold;">[r]</span> or <span style="font-weight: bold;">[s]</span> keys to reverse <span style="font-weight: bold;">Data Table</span> data rows order. Switch between ascending order/oldest first (chronological order) or descending order/newest first (reverse chronological order).</div>
       
       <div>* Press <span style="font-weight: bold;">[m]</span> key to switch between <i>line</i> or <i>bar</i> graphs in <span style="font-weight: bold;">Monthly Contribution Gained Graph</span>.</div>

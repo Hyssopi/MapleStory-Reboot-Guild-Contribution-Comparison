@@ -5,61 +5,71 @@
       "name": "Eternal",
       "color": "#FF2222",
       "backgroundColor": "#FF936C",
-      "symbolUrl": "images/icons/eternalIcon.png"
+      "symbolUrl": "images/icons/eternalIcon.png",
+      "visible": true
     },
     {
       "name": "Smile",
       "color": "#22BBFF",
       "backgroundColor": "#A7F0FF",
-      "symbolUrl": "images/icons/smileIcon.png"
+      "symbolUrl": "images/icons/smileIcon.png",
+      "visible": true
     },
     {
       "name": "Elite",
       "color": "#FFBB22",
       "backgroundColor": "#FFFFB5",
-      "symbolUrl": "images/icons/eliteIcon.png"
+      "symbolUrl": "images/icons/eliteIcon.png",
+      "visible": true
     },
     {
       "name": "Savages",
       "color": "#FF8800",
       "backgroundColor": "#FFCD76",
-      "symbolUrl": "images/icons/savagesIcon.png"
+      "symbolUrl": "images/icons/savagesIcon.png",
+      "visible": true
     },
     {
       "name": "Bounce",
       "color": "#43864E",
       "backgroundColor": "#91D798",
-      "symbolUrl": "images/icons/bounceIcon.png"
+      "symbolUrl": "images/icons/bounceIcon.png",
+      "visible": true
     },
     {
       "name": "Spring",
       "color": "#77DD11",
       "backgroundColor": "#C0FA8E",
-      "symbolUrl": "images/icons/springIcon.png"
+      "symbolUrl": "images/icons/springIcon.png",
+      "visible": true
     },
     {
       "name": "Sunset",
       "color": "#BB8800",
       "backgroundColor": "#FFEE22",
-      "symbolUrl": "images/icons/sunsetIcon.png"
+      "symbolUrl": "images/icons/sunsetIcon.png",
+      "visible": true
     },
     {
       "name": "Downtime",
       "color": "#990000",
       "backgroundColor": "#FF7777",
-      "symbolUrl": "images/icons/downtimeIcon.png"
+      "symbolUrl": "images/icons/downtimeIcon.png",
+      "visible": true
     },
     {
       "name": "Epic",
       "color": "#5533BB",
       "backgroundColor": "#B598F0",
-      "symbolUrl": "images/icons/epicIcon.png"
+      "symbolUrl": "images/icons/epicIcon.png",
+      "visible": true
     },
     {
       "name": "Beaters",
       "color": "#0088BB",
       "backgroundColor": "#55D2FF",
-      "symbolUrl": "images/icons/beatersIcon.png"
+      "symbolUrl": "images/icons/beatersIcon.png",
+      "visible": true
     }
   ],
   "dayEntries":
