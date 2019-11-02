@@ -259,7 +259,7 @@ function generateSeries(guildDataReference, showAllGuilds)
         color: guilds[i].color,
         marker:
         {
-          symbol: 'url(' + guilds[i].symbolUrl + ')',
+          symbol: 'url(' + guilds[i].iconUrl + ')',
           width: 22,
           height: 22
         },

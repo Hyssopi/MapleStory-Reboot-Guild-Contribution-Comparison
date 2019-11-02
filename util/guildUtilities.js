@@ -265,7 +265,7 @@ export function calculateGuildSummaryResults(guildDataReference, showAllGuilds)
         guildName: guilds[i].name,
         guildColor: guilds[i].color,
         guildBackgroundColor: guilds[i].backgroundColor,
-        guildSymbolUrl: guilds[i].symbolUrl,
+        guildIconUrl: guilds[i].iconUrl,
         latestValidEntryDate: latestValidEntryDate,
         latestValidContribution: latestValidContribution,
         earlierMonthValidEntryDate: earlierMonthValidEntryDate,
@@ -514,7 +514,7 @@ export function printDebug(guildData)
       guildName: guildSummaryResult.guildName,
       guildColor: guildSummaryResult.guildColor,
       guildBackgroundColor: guildSummaryResult.guildBackgroundColor,
-      guildSymbolUrl: guildSummaryResult.guildSymbolUrl,
+      guildIconUrl: guildSummaryResult.guildIconUrl,
       latestValidEntryDate: utilities.getFormattedDate(guildSummaryResult.latestValidEntryDate),
       latestValidContribution: utilities.thousandsCommaFormatNumber(guildSummaryResult.latestValidContribution),
       earlierMonthValidEntryDate: utilities.getFormattedDate(guildSummaryResult.earlierMonthValidEntryDate),
@@ -570,7 +570,16 @@ export function calculateGuildDataReference(guildData)
     return date2.isSameOrBefore(date1);
   });
   
-  guildDataReference.set('guilds', guildData.guilds);
+  // Make a deep copy of the guilds array
+  let guildsCopy = JSON.parse(JSON.stringify(guildData.guilds));
+  // Create guild iconUrl from iconDirectoryPath + iconFilename
+  for (let i = 0; i < guildsCopy.length; i++)
+  {
+    guildsCopy[i].iconUrl = guildData.iconDirectoryPath + '/' + guildsCopy[i].iconFilename;
+    delete guildsCopy[i].iconFilename;
+  }
+  
+  guildDataReference.set('guilds', guildsCopy);
   getGuilds(guildDataReference).sort(function(guild1, guild2)
   {
     let latestValidEntryDate1 = findLatestValidContributionEntryDate(guildDataReference, guild1.name);

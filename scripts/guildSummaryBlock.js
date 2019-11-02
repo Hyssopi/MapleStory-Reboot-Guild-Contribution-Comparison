@@ -229,7 +229,7 @@ function generateGuildComparisonHtmlSubBlock(guildSummaryResult1, guildSummaryRe
  */
 function getFormattedGuildNameHtml(guildSummaryResult)
 {
-  return `<img src="${guildSummaryResult.guildSymbolUrl}" style="height: 20px; padding: 0px 5px 0px 0px;"><span style="font-weight: bold; color: ${guildSummaryResult.guildColor};">${guildSummaryResult.guildName}</span>`;
+  return `<img src="${guildSummaryResult.guildIconUrl}" style="height: 20px; padding: 0px 5px 0px 0px;"><span style="font-weight: bold; color: ${guildSummaryResult.guildColor};">${guildSummaryResult.guildName}</span>`;
 }
 
 /**

@@ -90,7 +90,7 @@ function generateTableHeader(guilds)
   {
     guildNameHeadersHtml += `
       <th colspan="3" style="background-color: ${guilds[i].backgroundColor}; font-size: 20px;">
-        <img src="${guilds[i].symbolUrl}" style="height: 20px;"><span style="font-weight: bold; color: ${guilds[i].color};"> ${guilds[i].name}</span>
+        <img src="${guilds[i].iconUrl}" style="height: 20px;"><span style="font-weight: bold; color: ${guilds[i].color};"> ${guilds[i].name}</span>
       </th>
     `;
     descriptionHeadersHtml += `
@@ -174,7 +174,7 @@ function generateTableFooter(guilds)
   {
     guildNameFootersHtml += `
       <th colspan="3" style="background-color: ${guilds[i].backgroundColor}; font-size: 20px;">
-        <img src="${guilds[i].symbolUrl}" style="height: 20px;"><span style="font-weight: bold; color: ${guilds[i].color};"> ${guilds[i].name}</span>
+        <img src="${guilds[i].iconUrl}" style="height: 20px;"><span style="font-weight: bold; color: ${guilds[i].color};"> ${guilds[i].name}</span>
       </th>
     `;
     descriptionFootersHtml += `

@@ -1,81 +1,82 @@
 {
+  "iconDirectoryPath": "images/icons",
   "guilds":
   [
     {
       "name": "Eternal",
       "color": "#FF2222",
       "backgroundColor": "#FF936C",
-      "symbolUrl": "images/icons/eternalIcon.png",
+      "iconFilename": "Eternal.png",
       "visible": true
     },
     {
       "name": "Smile",
       "color": "#22BBFF",
       "backgroundColor": "#A7F0FF",
-      "symbolUrl": "images/icons/smileIcon.png",
+      "iconFilename": "Smile.png",
       "visible": true
     },
     {
       "name": "Elite",
       "color": "#FFBB22",
       "backgroundColor": "#FFFFB5",
-      "symbolUrl": "images/icons/eliteIcon.png",
+      "iconFilename": "Elite.png",
       "visible": true
     },
     {
       "name": "Savages",
       "color": "#FF8800",
       "backgroundColor": "#FFCD76",
-      "symbolUrl": "images/icons/savagesIcon.png",
+      "iconFilename": "Savages.png",
       "visible": true
     },
     {
       "name": "Bounce",
       "color": "#43864E",
       "backgroundColor": "#91D798",
-      "symbolUrl": "images/icons/bounceIcon.png",
+      "iconFilename": "Bounce.png",
       "visible": true
     },
     {
       "name": "Spring",
       "color": "#77DD11",
       "backgroundColor": "#C0FA8E",
-      "symbolUrl": "images/icons/springIcon.png",
+      "iconFilename": "Spring.png",
       "visible": true
     },
     {
       "name": "Sunset",
       "color": "#BB8800",
       "backgroundColor": "#FFEE22",
-      "symbolUrl": "images/icons/sunsetIcon.png",
+      "iconFilename": "Sunset.png",
       "visible": true
     },
     {
       "name": "Downtime",
       "color": "#990000",
       "backgroundColor": "#FF7777",
-      "symbolUrl": "images/icons/downtimeIcon.png",
+      "iconFilename": "Downtime.png",
       "visible": true
     },
     {
       "name": "Epic",
       "color": "#5533BB",
       "backgroundColor": "#B598F0",
-      "symbolUrl": "images/icons/epicIcon.png",
+      "iconFilename": "Epic.png",
       "visible": true
     },
     {
       "name": "Beaters",
       "color": "#0088BB",
       "backgroundColor": "#55D2FF",
-      "symbolUrl": "images/icons/beatersIcon.png",
+      "iconFilename": "Beaters.png",
       "visible": true
     },
     {
       "name": "Tama",
       "color": "#DD0000",
       "backgroundColor": "#89B53F",
-      "symbolUrl": "images/icons/tamaIcon.png",
+      "iconFilename": "Tama.png",
       "visible": false
     }
   ],
