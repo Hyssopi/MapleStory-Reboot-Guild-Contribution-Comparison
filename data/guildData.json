@@ -74,8 +74,8 @@
     },
     {
       "name": "Tama",
-      "color": "#DD0000",
-      "backgroundColor": "#89B53F",
+      "color": "#77D2F4",
+      "backgroundColor": "#EEEEEE",
       "iconFilename": "Tama.png",
       "visible": false
     }
