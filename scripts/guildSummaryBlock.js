@@ -35,7 +35,7 @@ function generateGuildLatestHtmlBlock(guildSummaryResults)
     let guildSummaryResult = guildSummaryResults[i];
     tableRowsHtml += `
       <tr style="color: ${guildSummaryResult.guildColor};">
-        <td nowrap style="padding: 5px 10px 5px 0px; font-weight: bold; border: none;">
+        <td nowrap class="tableCellVerticalAlignMiddle" style="padding: 5px 10px 5px 0px; font-weight: bold; border: none;">
           ${getFormattedGuildNameHtml(guildSummaryResult)}:
         </td>
         <td nowrap style="padding: 5px 0px 5px 0px; font-weight: bold; text-align: right; border: none;">${utilities.thousandsCommaFormatNumber(guildSummaryResult.latestValidContribution)}</td>
@@ -70,7 +70,7 @@ function generateGuildAverageHtmlBlock(guildSummaryResults)
     let guildSummaryResult = guildSummaryResults[i];
     tableRowsHtml += `
       <tr style="color: ${guildSummaryResult.guildColor};">
-        <td nowrap style="padding: 5px 10px 5px 0px; font-weight: bold; border: none;">
+        <td nowrap class="tableCellVerticalAlignMiddle" style="padding: 5px 10px 5px 0px; font-weight: bold; border: none;">
           ${getFormattedGuildNameHtml(guildSummaryResult)}:
         </td>
         <td nowrap style="padding: 5px 0px 5px 0px; font-weight: bold; text-align: right; border: none;">${utilities.isNumeric(guildSummaryResult.averagePerDay) ? utilities.thousandsCommaFormatNumber(Math.floor(guildSummaryResult.averagePerDay)) : 'N/A'}</td>

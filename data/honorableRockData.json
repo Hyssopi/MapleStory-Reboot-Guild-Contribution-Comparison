@@ -1,0 +1,220 @@
+{
+  "iconDirectoryPath": "images/icons",
+  "guilds":
+  [
+    {"name": "Eternal", "backgroundColor": "#FF936C", "iconFilename": "Eternal.png"},
+    {"name": "Smile", "backgroundColor": "#A7F0FF", "iconFilename": "Smile.png"},
+    {"name": "Elite", "backgroundColor": "#FFFFB5", "iconFilename": "Elite.png"},
+    {"name": "Savages", "backgroundColor": "#FFCD76", "iconFilename": "Savages.png"},
+    {"name": "Bounce", "backgroundColor": "#91D798", "iconFilename": "Bounce.png"},
+    {"name": "Spring", "backgroundColor": "#C0FA8E", "iconFilename": "Spring.png"},
+    {"name": "Sunset", "backgroundColor": "#FFEE22", "iconFilename": "Sunset.png"},
+    {"name": "Downtime", "backgroundColor": "#FF7777", "iconFilename": "Downtime.png"},
+    {"name": "Beaters", "backgroundColor": "#55D2FF", "iconFilename": "Beaters.png"},
+    {"name": "Epic", "backgroundColor": "#C6B0F4", "iconFilename": "Epic.png"},
+    {"name": "RainSong", "backgroundColor": "#FFFFBB", "iconFilename": "RainSong.png"},
+    {"name": "lolicafe", "backgroundColor": "#D2FFF4", "iconFilename": "lolicafe.png"},
+    {"name": "Imperium", "backgroundColor": "#FFFFDD", "iconFilename": "Imperium.png"},
+    {"name": "Gintama", "backgroundColor": "#F1F1D6", "iconFilename": "Gintama.png"},
+    {"name": "Undertale", "backgroundColor": "#FFA9A9", "iconFilename": "Undertale.png"},
+    {"name": "Maha", "backgroundColor": "#C8FFF0", "iconFilename": "Maha.png"},
+    {"name": "Atelier", "backgroundColor": "#FFFFE3", "iconFilename": "Atelier.png"},
+    {"name": "Erda", "backgroundColor": "#FFFFFF", "iconFilename": "Erda.png"},
+    {"name": "Remorse", "backgroundColor": "#DDE8FF", "iconFilename": "Remorse.png"},
+    {"name": "Sora", "backgroundColor": "#9F9F9F", "iconFilename": "Sora.png"},
+    {"name": "Oceania", "backgroundColor": "#FFC5F0", "iconFilename": "Oceania.png"},
+    {"name": "Cleanse", "backgroundColor": "#A7EEFF", "iconFilename": "Cleanse.png"},
+    {"name": "Broke", "backgroundColor": "#757575", "iconFilename": "Broke.png"},
+    {"name": "Ravers", "backgroundColor": "#F4A4E8", "iconFilename": "Ravers.png"},
+    {"name": "Tama", "backgroundColor": "#77D2F4", "iconFilename": "Tama.png"},
+    {"name": "Artifacts", "backgroundColor": "#AA88FF", "iconFilename": "Artifacts.png"},
+    {"name": "Lithe", "backgroundColor": "#62D4F0", "iconFilename": "Lithe.png"},
+    {"name": "Rising", "backgroundColor": "#F7F7F7", "iconFilename": "Rising.png"},
+    {"name": "Sugar", "backgroundColor": "#F0F0F0", "iconFilename": "Sugar.png"},
+    {"name": "Revive", "backgroundColor": "#59BA90", "iconFilename": "Revive.png"},
+    {"name": "Fabled", "backgroundColor": "#FF7575", "iconFilename": "Fabled.png"},
+    {"name": "chigga", "backgroundColor": "#7F7F7F", "iconFilename": "chigga.png"},
+    {"name": "Aloe", "backgroundColor": "#D2FF82", "iconFilename": "Aloe.png"},
+    {"name": "Earnest", "backgroundColor": "#85A9F2", "iconFilename": "Earnest.png"},
+    {"name": "Skyfall", "backgroundColor": "#FFFFCD", "iconFilename": "Skyfall.png"},
+    {"name": "CyberThreat", "backgroundColor": "#9C9C9C", "iconFilename": "CyberThreat.png"},
+    {"name": "Path", "backgroundColor": "#FFFFBA", "iconFilename": "Path.png"},
+    {"name": "Fandom", "backgroundColor": "#FD969B", "iconFilename": "Fandom.png"},
+    {"name": "Mystical", "backgroundColor": "#FDFED6", "iconFilename": "Mystical.png"},
+    {"name": "Bubbles", "backgroundColor": "#59DBF3", "iconFilename": "Bubbles.png"},
+    {"name": "Comity", "backgroundColor": "#C6A1F7", "iconFilename": "Comity.png"},
+    {"name": "Coffee", "backgroundColor": "#FFBB72", "iconFilename": "Coffee.png"},
+    {"name": "Exorcist", "backgroundColor": "#AEFDFF", "iconFilename": "Exorcist.png"},
+    {"name": "Reboot", "backgroundColor": "#D8A9CD", "iconFilename": "Reboot.png"},
+    {"name": "Howl", "backgroundColor": "#EEEEEE", "iconFilename": "Howl.png"},
+    {"name": "UnIimited", "backgroundColor": "#FFD322", "iconFilename": "UnIimited.png"},
+    {"name": "Faction", "backgroundColor": "#B0B0B0", "iconFilename": "Faction.png"},
+    {"name": "Weibo", "backgroundColor": "#FFD38F", "iconFilename": "Weibo.png"},
+    {"name": "Kingdom", "backgroundColor": "#FFFFBA", "iconFilename": "Kingdom.png"},
+    {"name": "RainDrop", "backgroundColor": "#E0E0E3", "iconFilename": "RainDrop.png"},
+    {"name": "Prestigious", "backgroundColor": "#F4A4E8", "iconFilename": "Prestigious.png"}
+  ],
+  "monthlyEntries":
+  {
+    "August 2019":
+    [
+      {"rank": 1, "name": "Eternal", "contribution": 225187507}
+      , {"rank": 2, "name": "Smile", "contribution": 207340223}
+      , {"rank": 3, "name": "Elite", "contribution": 189905697}
+      , {"rank": 4, "name": "Savages", "contribution": 182851076}
+      , {"rank": 5, "name": "Bounce", "contribution": 170961430}
+      , {"rank": 6, "name": "Spring", "contribution": 144078213}
+      , {"rank": 7, "name": "Sunset", "contribution": 135003840}
+      , {"rank": 8, "name": "Downtime", "contribution": 105827145}
+      , {"rank": 9, "name": "Beaters", "contribution": 104004646}
+      , {"rank": 10, "name": "Epic", "contribution": 100145719}
+      , {"rank": 11, "name": "RainSong", "contribution": 95199449}
+      , {"rank": 12, "name": "lolicafe", "contribution": 91436038}
+      , {"rank": 13, "name": "Imperium", "contribution": 91382306}
+      , {"rank": 14, "name": "Gintama", "contribution": 88228582}
+      , {"rank": 15, "name": "Undertale", "contribution": 82737462}
+      , {"rank": 16, "name": "Maha", "contribution": 78875917}
+      , {"rank": 17, "name": "Atelier", "contribution": 77006618}
+      , {"rank": 18, "name": "Erda", "contribution": 76785339}
+      , {"rank": 19, "name": "Remorse", "contribution": 72879112}
+      , {"rank": 20, "name": "Sora", "contribution": 69684164}
+      , {"rank": 21, "name": "Oceania", "contribution": 69479642}
+      , {"rank": 22, "name": "Cleanse", "contribution": 66368633}
+      , {"rank": 23, "name": "Broke", "contribution": 63716179}
+      , {"rank": 24, "name": "Ravers", "contribution": 61547580}
+      , {"rank": 25, "name": "Tama", "contribution": 61096400}
+      , {"rank": 26, "name": "Artifacts", "contribution": 60591710}
+      , {"rank": 27, "name": "Lithe", "contribution": 60588855}
+      , {"rank": 28, "name": "Rising", "contribution": 58207158}
+      , {"rank": 29, "name": "Sugar", "contribution": 57527853}
+      , {"rank": 30, "name": "Revive", "contribution": 56748249}
+      , {"rank": 31, "name": "Fabled", "contribution": 53239243}
+      , {"rank": 32, "name": "chigga", "contribution": 50693531}
+      , {"rank": 33, "name": "Aloe", "contribution": 49375114}
+      , {"rank": 34, "name": "Earnest", "contribution": 47739798}
+      , {"rank": 35, "name": "Skyfall", "contribution": 47601772}
+      , {"rank": 36, "name": "CyberThreat", "contribution": 46635994}
+      , {"rank": 37, "name": "Path", "contribution": 45423590}
+      , {"rank": 38, "name": "Fandom", "contribution": 45147222}
+      , {"rank": 39, "name": "Mystical", "contribution": 43403826}
+      , {"rank": 40, "name": "Bubbles", "contribution": 43379210}
+      , {"rank": 41, "name": "Comity", "contribution": 42440481}
+      , {"rank": 42, "name": "Coffee", "contribution": 42111015}
+      , {"rank": 43, "name": "Exorcist", "contribution": 41641109}
+      , {"rank": 44, "name": "Reboot", "contribution": 38900508}
+      , {"rank": 45, "name": "Howl", "contribution": 38784211}
+      , {"rank": 46, "name": "UnIimited", "contribution": 37750832}
+      , {"rank": 47, "name": "Faction", "contribution": 37554521}
+      , {"rank": 48, "name": "Weibo", "contribution": 37514141}
+      , {"rank": 49, "name": "Kingdom", "contribution": 37119303}
+      , {"rank": 50, "name": "RainDrop", "contribution": 35535472}
+    ],
+    "September 2019":
+    [
+      {"rank": 1, "name": "Eternal", "contribution": 229758068}
+      , {"rank": 2, "name": "Smile", "contribution": 213057091}
+      , {"rank": 3, "name": "Elite", "contribution": 193437602}
+      , {"rank": 4, "name": "Savages", "contribution": 186292367}
+      , {"rank": 5, "name": "Bounce", "contribution": 178332051}
+      , {"rank": 6, "name": "Spring", "contribution": 146419217}
+      , {"rank": 7, "name": "Sunset", "contribution": 131393621}
+      , {"rank": 8, "name": "Downtime", "contribution": 108430466}
+      , {"rank": 9, "name": "Epic", "contribution": 107223916}
+      , {"rank": 10, "name": "Beaters", "contribution": 106458145}
+      , {"rank": 11, "name": "RainSong", "contribution": 96390513}
+      , {"rank": 12, "name": "Imperium", "contribution": 93916584}
+      , {"rank": 13, "name": "lolicafe", "contribution": 93146254}
+      , {"rank": 14, "name": "Gintama", "contribution": 85418493}
+      , {"rank": 15, "name": "Undertale", "contribution": 83815587}
+      , {"rank": 16, "name": "Erda", "contribution": 79549797}
+      , {"rank": 17, "name": "Maha", "contribution": 79163493}
+      , {"rank": 18, "name": "Atelier", "contribution": 76665157}
+      , {"rank": 19, "name": "Remorse", "contribution": 75917343}
+      , {"rank": 20, "name": "Sora", "contribution": 71584772}
+      , {"rank": 21, "name": "Cleanse", "contribution": 70823311}
+      , {"rank": 22, "name": "Oceania", "contribution": 68941308}
+      , {"rank": 23, "name": "Broke", "contribution": 67761027}
+      , {"rank": 24, "name": "Tama", "contribution": 64805189}
+      , {"rank": 25, "name": "Lithe", "contribution": 62843617}
+      , {"rank": 26, "name": "Ravers", "contribution": 61936951}
+      , {"rank": 27, "name": "Artifacts", "contribution": 60760875}
+      , {"rank": 28, "name": "Revive", "contribution": 60056268}
+      , {"rank": 29, "name": "Rising", "contribution": 59240396}
+      , {"rank": 30, "name": "Sugar", "contribution": 59137361}
+      , {"rank": 31, "name": "Fabled", "contribution": 53653107}
+      , {"rank": 32, "name": "chigga", "contribution": 50670273}
+      , {"rank": 33, "name": "Aloe", "contribution": 50602666}
+      , {"rank": 34, "name": "Earnest", "contribution": 49279613}
+      , {"rank": 35, "name": "Skyfall", "contribution": 48220152}
+      , {"rank": 36, "name": "CyberThreat", "contribution": 47372766}
+      , {"rank": 37, "name": "Fandom", "contribution": 46078829}
+      , {"rank": 38, "name": "Mystical", "contribution": 45812126}
+      , {"rank": 39, "name": "Path", "contribution": 44805465}
+      , {"rank": 40, "name": "Bubbles", "contribution": 43479348}
+      , {"rank": 41, "name": "Comity", "contribution": 42465292}
+      , {"rank": 42, "name": "Coffee", "contribution": 42005268}
+      , {"rank": 43, "name": "Howl", "contribution": 39871821}
+      , {"rank": 44, "name": "Reboot", "contribution": 39444672}
+      , {"rank": 45, "name": "Faction", "contribution": 39414740}
+      , {"rank": 46, "name": "Kingdom", "contribution": 38722718}
+      , {"rank": 47, "name": "Weibo", "contribution": 38718751}
+      , {"rank": 48, "name": "RainDrop", "contribution": 38114450}
+      , {"rank": 49, "name": "Exorcist", "contribution": 37789547}
+      , {"rank": 50, "name": "Prestigious", "contribution": 37119924}
+    ],
+    "October 2019":
+    [
+      {"rank": 1, "name": "Eternal", "contribution": 233924584}
+      , {"rank": 2, "name": "Smile", "contribution": 217259006}
+      , {"rank": 3, "name": "Elite", "contribution": 198306816}
+      , {"rank": 4, "name": "Savages", "contribution": 196362383}
+      , {"rank": 5, "name": "Bounce", "contribution": 187216354}
+      , {"rank": 6, "name": "Spring", "contribution": 144687922}
+      , {"rank": 7, "name": "Sunset", "contribution": 133149728}
+      , {"rank": 8, "name": "Epic", "contribution": 115222526}
+      , {"rank": 9, "name": "Downtime", "contribution": 110971018}
+      , {"rank": 10, "name": "Beaters", "contribution": 108789896}
+      , {"rank": 11, "name": "RainSong", "contribution": 97798274}
+      , {"rank": 12, "name": "Imperium", "contribution": 95427063}
+      , {"rank": 13, "name": "lolicafe", "contribution": 94162860}
+      , {"rank": 14, "name": "Gintama", "contribution": 86109347}
+      , {"rank": 15, "name": "Undertale", "contribution": 85210181}
+      , {"rank": 16, "name": "Erda", "contribution": 81951785}
+      , {"rank": 17, "name": "Maha", "contribution": 81435659}
+      , {"rank": 18, "name": "Remorse", "contribution": 79195675}
+      , {"rank": 19, "name": "Atelier", "contribution": 77246155}
+      , {"rank": 20, "name": "Cleanse", "contribution": 74262237}
+      , {"rank": 21, "name": "Sora", "contribution": 73188996}
+      , {"rank": 22, "name": "Broke", "contribution": 69513343}
+      , {"rank": 23, "name": "Oceania", "contribution": 69192396}
+      , {"rank": 24, "name": "Tama", "contribution": 68373543}
+      , {"rank": 25, "name": "Lithe", "contribution": 64081500}
+      , {"rank": 26, "name": "Ravers", "contribution": 62038673}
+      , {"rank": 27, "name": "Revive", "contribution": 62011003}
+      , {"rank": 28, "name": "Sugar", "contribution": 61166882}
+      , {"rank": 29, "name": "Artifacts", "contribution": 60960813}
+      , {"rank": 30, "name": "Rising", "contribution": 60704134}
+      , {"rank": 31, "name": "Fabled", "contribution": 54737750}
+      , {"rank": 32, "name": "Aloe", "contribution": 52233102}
+      , {"rank": 33, "name": "Earnest", "contribution": 50988917}
+      , {"rank": 34, "name": "chigga", "contribution": 50768073}
+      , {"rank": 35, "name": "Skyfall", "contribution": 49821660}
+      , {"rank": 36, "name": "CyberThreat", "contribution": 48290561}
+      , {"rank": 37, "name": "Mystical", "contribution": 47025290}
+      , {"rank": 38, "name": "Fandom", "contribution": 46456362}
+      , {"rank": 39, "name": "Path", "contribution": 44582987}
+      , {"rank": 40, "name": "Comity", "contribution": 43625452}
+      , {"rank": 41, "name": "Bubbles", "contribution": 42627673}
+      , {"rank": 42, "name": "Coffee", "contribution": 42267226}
+      , {"rank": 43, "name": "Howl", "contribution": 41132771}
+      , {"rank": 44, "name": "Weibo", "contribution": 40763405}
+      , {"rank": 45, "name": "RainDrop", "contribution": 40292162}
+      , {"rank": 46, "name": "Reboot", "contribution": 40007024}
+      , {"rank": 47, "name": "Kingdom", "contribution": 39985166}
+      , {"rank": 48, "name": "Faction", "contribution": 39404711}
+      , {"rank": 49, "name": "Exorcist", "contribution": 38764238}
+      , {"rank": 50, "name": "Prestigious", "contribution": 37196256}
+    ]
+    
+  }
+}

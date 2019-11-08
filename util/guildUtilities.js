@@ -451,14 +451,14 @@ export function calculateGuildContributionGainedMonth(guildDataReference, guildN
 }
 
 /**
- * Print debug statements regarding guildData.
+ * Print Guild debug statements regarding guildData.
  *
  * @param guildData Contains all the guild data and data entries
  */
-export function printDebug(guildData)
+export function printGuildDebug(guildData)
 {
   console.log('\n\n');
-  console.info("*****printDebug() TEST PRINT START*****");
+  console.info("*****GUILD DEBUG PRINT START*****");
   
   console.info('Guild Data:');
   console.log(guildData);
@@ -523,7 +523,28 @@ export function printDebug(guildData)
     });
   }
   
-  console.log("*****printDebug() TEST PRINT END*****");
+  console.log("*****GUILD DEBUG PRINT END*****");
+}
+
+/**
+ * Print Honorable Rock debug statements regarding honorableRockData.
+ *
+ * @param honorableRockData Contains all the Honorable Rock data and data entries
+ */
+export function printHonorableRockDebug(honorableRockData)
+{
+  console.log('\n\n');
+  console.info("*****HONORABLE ROCK DEBUG PRINT START*****");
+  
+  console.info('Honorable Rock Data:');
+  console.log(honorableRockData);
+  console.log('\n');
+  
+  let honorableRockDataReference = calculateHonorableRockDataReference(honorableRockData);
+  console.info('Honorable Rock Reference:');
+  console.log(honorableRockDataReference);
+  
+  console.log("*****HONORABLE ROCK DEBUG PRINT END*****");
 }
 
 /**
@@ -539,9 +560,34 @@ export function getGuildDataReferenceKey(date, guildName)
 }
 
 /**
+ * Get Honorable Rock Data Reference Key for a specific guild or rank at a specific month/year.
+ *
+ * @param date Date to get, only care about month and year
+ * @param keyPart Either the guild name or rank number
+ * @return Honorable Rock Data Reference Key for a specific guild or rank at a specific month/year
+ */
+export function getHonorableRockDataReferenceKeyByDate(date, keyPart)
+{
+  return getHonorableRockDataReferenceKey(date.format('MMMM YYYY'), keyPart);
+}
+
+/**
+ * Get Honorable Rock Data Reference Key for a specific guild or rank at a specific month/year.
+ *
+ * @param dateString In "MMMM YYYY" format
+ * @param keyPart Either the guild name or rank number
+ * @return Honorable Rock Data Reference Key for a specific guild or rank at a specific month/year
+ */
+export function getHonorableRockDataReferenceKey(dateString, keyPart)
+{
+  return dateString + ' ' + keyPart;
+}
+
+/**
  * Calculate Guild data and process and package into a map to be used as reference.
  *
  * @param guildData Contains all the guild data and data entries
+ * @return Guild Data Reference, Guild data processed and packaged as a map
  */
 export function calculateGuildDataReference(guildData)
 {
@@ -592,4 +638,61 @@ export function calculateGuildDataReference(guildData)
   });
   
   return guildDataReference;
+}
+
+/**
+ * Calculate Honorable Rock data and process and package into a map to be used as reference.
+ *
+ * @param honorableRockData Contains all the Honorable Rock data and data entries
+ * @return Honorable Rock Data Reference, Honorable Rock data processed and packaged as a map
+ */
+export function calculateHonorableRockDataReference(honorableRockData)
+{
+  let honorableRockDataReference = new Map();
+  
+  let startDate = null;
+  let endDate = null;
+  
+  let monthYearKey = Object.keys(honorableRockData.monthlyEntries);
+  for (let i = 0; i < monthYearKey.length; i++)
+  {
+    // monthYearKey is in the format of MMMM YYYY, for example: "August 2019"
+    let loopDate = moment(new Date('01 ' + monthYearKey[i]));
+    if (!startDate || loopDate.isBefore(startDate))
+    {
+      startDate = loopDate;
+    }
+    if (!endDate || loopDate.isAfter(endDate))
+    {
+      endDate = loopDate;
+    }
+    
+    let monthlyEntry = honorableRockData.monthlyEntries[monthYearKey[i]];
+    //console.log(monthlyEntry);
+    for (let j = 0; j < monthlyEntry.length; j++)
+    {
+      let guildEntry = monthlyEntry[j];
+      honorableRockDataReference.set(getHonorableRockDataReferenceKey(monthYearKey[i], guildEntry.name), guildEntry);
+      honorableRockDataReference.set(getHonorableRockDataReferenceKey(monthYearKey[i], guildEntry.rank), guildEntry);
+    }
+  }
+  
+  honorableRockDataReference.set('startDate', startDate);
+  honorableRockDataReference.set('endDate', endDate);
+  
+  // Make a deep copy of the guilds array
+  let guildsCopy = JSON.parse(JSON.stringify(honorableRockData.guilds));
+  // Create guild iconUrl from iconDirectoryPath + iconFilename
+  for (let i = 0; i < guildsCopy.length; i++)
+  {
+    guildsCopy[i].iconUrl = honorableRockData.iconDirectoryPath + '/' + guildsCopy[i].iconFilename;
+    delete guildsCopy[i].iconFilename;
+    
+    // Key to general guild data will be the guild name
+    honorableRockDataReference.set(guildsCopy[i].name, guildsCopy[i]);
+    
+    delete guildsCopy[i].name;
+  }
+  
+  return honorableRockDataReference;
 }

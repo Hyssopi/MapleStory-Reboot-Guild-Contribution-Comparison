@@ -12,11 +12,24 @@
   
   <body>
     <div class="tab">
-      <button class="tabLinks" onclick="openTab(event, 'guildContributionGraphId')">Contribution Graph</button>
-      <button class="tabLinks" onclick="openTab(event, 'guildSummaryBlockId')">Summary</button>
-      <button class="tabLinks" onclick="openTab(event, 'guildDataTableId')">Data Table</button>
-      <button class="tabLinks" onclick="openTab(event, 'guildMonthlyContributionGainedGraphId')">Monthly Contribution Gained Graph</button>
-      <button class="tabLinks" onclick="openTab(event, 'guildAboutId')">About</button>
+      <button class="tabLinks" onclick="openTab(event, 'guildContributionGraphId')">
+        <i class="material-icons" style="font-size: 30px; color: black;">trending_up</i>Contribution Graph
+      </button>
+      <button class="tabLinks" onclick="openTab(event, 'guildSummaryBlockId')">
+        <i class="material-icons" style="font-size: 30px; color: black;">subject</i>Summary
+      </button>
+      <button class="tabLinks" onclick="openTab(event, 'guildDataTableId')">
+        <i class="material-icons" style="font-size: 30px; color: black;">view_list</i>Data Table
+      </button>
+      <button class="tabLinks" onclick="openTab(event, 'guildMonthlyContributionGainedGraphId')">
+        <i class="material-icons" style="font-size: 30px; color: black;">assessment</i>Monthly Contribution Gained Graph
+      </button>
+      <button class="tabLinks" onclick="openTab(event, 'honorableRockDataTableId')">
+        <i class="material-icons" style="font-size: 30px; color: black;">event_note</i>Honorable Rock
+      </button>
+      <button class="tabLinks" onclick="openTab(event, 'guildAboutId')">
+        <i class="material-icons" style="font-size: 30px; color: black;">info</i>About
+      </button>
     </div>
     
     <div id="guildContributionGraphId" class="tabContent" style="display: block">
@@ -33,6 +46,10 @@
     
     <div id="guildMonthlyContributionGainedGraphId" class="tabContent" style="display: none">
       <div id="guildMonthlyContributionGainedGraphHtmlWrapper"></div>
+    </div>
+    
+    <div id="honorableRockDataTableId" class="tabContent" style="display: none">
+      <div id="honorableRockDataTableHtmlWrapper"></div>
     </div>
     
     <div id="guildAboutId" class="tabContent" style="display: none">

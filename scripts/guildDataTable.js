@@ -89,7 +89,7 @@ function generateTableHeader(guilds)
   for (let i = 0; i < guilds.length; i++)
   {
     guildNameHeadersHtml += `
-      <th colspan="3" style="background-color: ${guilds[i].backgroundColor}; font-size: 20px;">
+      <th colspan="3" class="tableCellVerticalAlignMiddle" style="background-color: ${guilds[i].backgroundColor}; font-size: 20px; padding: 5px 0px 5px 0px;">
         <img src="${guilds[i].iconUrl}" style="height: 20px;"><span style="font-weight: bold; color: ${guilds[i].color};"> ${guilds[i].name}</span>
       </th>
     `;
@@ -148,13 +148,13 @@ function generateTableRow(date, guilds, colorScales)
     dateRowContentHtml += `
       <td nowrap style="text-align: end; background-color: ${contributionBackgroundColor}; font-size: 12px;">${utilities.thousandsCommaFormatNumber(contribution)}</td>
       <td nowrap style="text-align: end; background-color: ${guilds[i].backgroundColor}; font-size: 12px;">${utilities.isNumeric(contributionDifferenceFromLastEntryAveraged) ? utilities.thousandsCommaFormatNumber(Math.floor(contributionDifferenceFromLastEntryAveraged)) : '-'}</td>
-      <td nowrap style="text-align: center; background-color: ${guilds[i].backgroundColor}; font-size: 12px;">${memberCountDifferenceFromLastEntryIconHtml} ${memberCount}</td>
+      <td nowrap class="tableCellVerticalAlignMiddle" style="text-align: center; background-color: ${guilds[i].backgroundColor}; font-size: 12px;">${memberCountDifferenceFromLastEntryIconHtml} <span>${memberCount}</span></td>
     `;
   }
   
   return `
     <tr>
-      <td nowrap style="text-align: end; background-color: #DCDCDC; font-size: 12px;">${utilities.getFormattedDate(date)}</td>
+      <td nowrap style="text-align: end; background-color: #DCDCDC; font-size: 12px; padding: 4px 1px 4px 0px;">${utilities.getFormattedDate(date)}</td>
       ${dateRowContentHtml}
     </tr>
   `;
@@ -173,7 +173,7 @@ function generateTableFooter(guilds)
   for (let i = 0; i < guilds.length; i++)
   {
     guildNameFootersHtml += `
-      <th colspan="3" style="background-color: ${guilds[i].backgroundColor}; font-size: 20px;">
+      <th colspan="3" class="tableCellVerticalAlignMiddle" style="background-color: ${guilds[i].backgroundColor}; font-size: 20px; padding: 5px 0px 5px 0px;">
         <img src="${guilds[i].iconUrl}" style="height: 20px;"><span style="font-weight: bold; color: ${guilds[i].color};"> ${guilds[i].name}</span>
       </th>
     `;
