@@ -186,16 +186,33 @@ let subtitle =
 
 let tooltip =
 {
-  headerFormat: '<span style="font-size: 10px;"><strong>{point.key}</strong></span><br/>',
-  valueDecimals: 0,
-  shared: true,
+  useHTML: true,
+  headerFormat: '<span><strong>{point.key}</strong></span><br/>',
+  pointFormatter: function()
+  {
+    let legendSymbol;
+    if (this.series.legendSymbol.element.href)
+    {
+      // Line graph
+      legendSymbol = '<img src="' + this.series.legendSymbol.element.href.baseVal + '" style="height: 14px;">';
+    }
+    else
+    {
+      // Bar graph, does not have series image icons for some reason
+      // TODO: Hardcode path to image icons
+      let imageIconUrl = 'images/icons/' + this.series.name + '.png';
+      legendSymbol = '<img src="' + imageIconUrl + '" style="height: 14px;">';
+    }
+    return '<div style="font-size: 12px; font-weight: bold;">' + legendSymbol + '<span style="font-size: 14px;"> ' + this.series.name + '</span>: ' + utilities.thousandsCommaFormatNumber(Math.floor(this.y)) + '</div>';
+  },
+  split: true,
   backgroundColor:
   {
     linearGradient: [0, 0, 0, 60],
     stops:
     [
-      [0, '#FFFFFF'],
-      [1, '#E0E0E0']
+      [0, '#FFFFFFEE'],
+      [1, '#E0E0E0EE']
     ]
   },
   borderWidth: 2,

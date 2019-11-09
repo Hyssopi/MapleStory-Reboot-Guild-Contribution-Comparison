@@ -193,16 +193,22 @@ let subtitle =
 
 let tooltip =
 {
-  headerFormat: '<span style="font-size: 10px;"><strong>{point.key}</strong></span><br/>',
-  crosshairs: true,
-  shared: true,
+  useHTML: true,
+  xDateFormat: '%A, %d %B %Y',
+  headerFormat: '<span><strong>{point.key}</strong></span><br/>',
+  pointFormatter: function()
+  {
+    let legendSymbol = '<img src="' + this.series.legendSymbol.element.href.baseVal + '" style="height: 14px;">';
+    return '<div style="font-size: 12px; font-weight: bold;">' + legendSymbol + '<span style="font-size: 14px;"> ' + this.series.name + '</span>: ' + utilities.thousandsCommaFormatNumber(this.y) + '</div>';
+  },
+  split: true,
   backgroundColor:
   {
     linearGradient: [0, 0, 0, 60],
     stops:
     [
-      [0, '#FFFFFF'],
-      [1, '#E0E0E0']
+      [0, '#FFFFFFEE'],
+      [1, '#E0E0E0EE']
     ]
   },
   borderWidth: 2,
