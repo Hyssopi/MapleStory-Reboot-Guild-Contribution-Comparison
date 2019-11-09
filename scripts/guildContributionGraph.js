@@ -172,8 +172,9 @@ let yAxis =
   }
 }
 
-let subtitle =
+let caption =
 {
+  useHTML: true,
   text: '<span >* Left click + drag to zoom in graph</span>'
         + '<br>'
         + '<span style="color: #000000;">* Hold <span style="font-weight: bold;">[Shift]</span> to pan with left mouse button</span>'
@@ -186,9 +187,7 @@ let subtitle =
     fontSize: '12px',
     fontFamily: 'Arial, Liberation Sans, sans-serif'
   },
-  align: 'left',
-  verticalAlign: 'top',
-  useHTML: true
+  align: 'left'
 }
 
 let tooltip =
@@ -354,7 +353,7 @@ export function drawContributionGraph(chartHtmlContainerId, guildDataReference, 
     legend: legend,
     xAxis: xAxis,
     yAxis: yAxis,
-    subtitle: subtitle,
+    caption: caption,
     tooltip: tooltip,
     plotOptions: plotOptions,
     series: series
