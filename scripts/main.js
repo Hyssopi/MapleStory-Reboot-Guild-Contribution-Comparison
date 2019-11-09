@@ -18,6 +18,7 @@ let isDataTableChronologicalOrder = false;
 let isBarGuildMonthlyContributionGainedGraph = false;
 let honorableRockDataReference = null;
 
+// Reading Honorable Rock Data JSON file
 console.info('Reading: \'' + HONORABLE_ROCK_DATA_JSON_PATH + '\'');
 fetch(HONORABLE_ROCK_DATA_JSON_PATH)
   .then(response =>
@@ -39,36 +40,37 @@ fetch(HONORABLE_ROCK_DATA_JSON_PATH)
     honorableRockDataReference = guildUtilities.calculateHonorableRockDataReference(honorableRockData);
     
     guildUtilities.printHonorableRockDebug(honorableRockData);
-  })
-  .catch (function(error)
-  {
-    console.error('Error in fetching: ' + error);
-  })
-
-console.info('Reading: \'' + GUILD_DATA_JSON_PATH + '\'');
-fetch(GUILD_DATA_JSON_PATH)
-  .then(response =>
-  {
-    if (response.ok)
-    {
-      return response.json();
-    }
-    else
-    {
-      console.error('Configuration was not ok.');
-    }
-  })
-  .then(guildData =>
-  {
-    console.info('Successfully read guild data:');
-    console.log(guildData);
     
-    guildDataReference = guildUtilities.calculateGuildDataReference(guildData);
-    
-    // honorableRockDataReference should already be setup
-    setupTabs(guildDataReference, showAllGuilds, honorableRockDataReference);
-    
-    guildUtilities.printGuildDebug(guildData);
+    // Reading Guild Data JSON file
+    console.info('Reading: \'' + GUILD_DATA_JSON_PATH + '\'');
+    fetch(GUILD_DATA_JSON_PATH)
+      .then(response =>
+      {
+        if (response.ok)
+        {
+          return response.json();
+        }
+        else
+        {
+          console.error('Configuration was not ok.');
+        }
+      })
+      .then(guildData =>
+      {
+        console.info('Successfully read guild data:');
+        console.log(guildData);
+        
+        guildDataReference = guildUtilities.calculateGuildDataReference(guildData);
+        
+        // honorableRockDataReference should already be setup
+        setupTabs(guildDataReference, showAllGuilds, honorableRockDataReference);
+        
+        guildUtilities.printGuildDebug(guildData);
+      })
+      .catch (function(error)
+      {
+        console.error('Error in fetching: ' + error);
+      })
   })
   .catch (function(error)
   {
