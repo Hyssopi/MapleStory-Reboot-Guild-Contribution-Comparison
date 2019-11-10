@@ -264,7 +264,14 @@ function generateSeries(guildDataReference, showAllGuilds)
         color: guilds[i].color,
         marker:
         {
-          symbol: 'url(' + guilds[i].iconUrl + ')',
+          // TODO: Clicking "Reset zoom" messes up the symbol image size and uses the original width and height of the source image instead of the resized width and height specified here. Temporary fix is to resize the source images, temporarily placed in "MapleStory-Reboot-Guild-Contribution-Comparison/images/icons/HalfSized".
+          // TODO: Strange but adding this hack fix here seems to fix the same issue in Monthly Contribution Gained Graph (triggered differently: by switching between line/bar after causing the issue in Guild Contribution Graph).
+          symbol: 'url('
+            + guilds[i].iconUrl.substring(0, guilds[i].iconUrl.lastIndexOf('/'))
+            + '/HalfSized'
+            + guilds[i].iconUrl.substring(guilds[i].iconUrl.lastIndexOf('/'))
+            + ')',
+          //symbol: 'url(' + guilds[i].iconUrl + ')',
           width: 22,
           height: 22
         },
