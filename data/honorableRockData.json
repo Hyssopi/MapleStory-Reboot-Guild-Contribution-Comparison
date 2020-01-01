@@ -52,7 +52,8 @@
     {"name": "Weibo", "backgroundColor": "#FFD794", "iconFilename": "Weibo.png"},
     {"name": "Kingdom", "backgroundColor": "#FFFFBA", "iconFilename": "Kingdom.png"},
     {"name": "RainDrop", "backgroundColor": "#A3CEFC", "iconFilename": "RainDrop.png"},
-    {"name": "Prestigious", "backgroundColor": "#F4A4E8", "iconFilename": "Prestigious.png"}
+    {"name": "Prestigious", "backgroundColor": "#F4A4E8", "iconFilename": "Prestigious.png"},
+    {"name": "HeavenSent", "backgroundColor": "#DDF9FF", "iconFilename": "HeavenSent.png"}
   ],
   "monthlyEntries":
   {
@@ -267,7 +268,60 @@
       , {"rank": 48, "name": "Exorcist", "contribution": 39638954}
       , {"rank": 49, "name": "Faction", "contribution": 38974765}
       , {"rank": 50, "name": "Prestigious", "contribution": 36645409}
+    ],
+    "December 2019":
+    [
+      {"rank": 1, "name": "Eternal", "contribution": 240789974}
+      , {"rank": 2, "name": "Smile", "contribution": 230242820}
+      , {"rank": 3, "name": "Savages", "contribution": 216089993}
+      , {"rank": 4, "name": "Elite", "contribution": 205319584}
+      , {"rank": 5, "name": "Bounce", "contribution": 204399710}
+      , {"rank": 6, "name": "Spring", "contribution": 145824555}
+      , {"rank": 7, "name": "Sunset", "contribution": 136931011}
+      , {"rank": 8, "name": "Epic", "contribution": 126046520}
+      , {"rank": 9, "name": "Beaters", "contribution": 118695090}
+      , {"rank": 10, "name": "Downtime", "contribution": 116795406}
+      , {"rank": 11, "name": "RainSong", "contribution": 99533446}
+      , {"rank": 12, "name": "lolicafe", "contribution": 98658827}
+      , {"rank": 13, "name": "Imperium", "contribution": 97872638}
+      , {"rank": 14, "name": "Gintama", "contribution": 87349880}
+      , {"rank": 15, "name": "Undertale", "contribution": 86638324}
+      , {"rank": 16, "name": "Maha", "contribution": 85337314}
+      , {"rank": 17, "name": "Remorse", "contribution": 85244997}
+      , {"rank": 18, "name": "Erda", "contribution": 81758022}
+      , {"rank": 19, "name": "Cleanse", "contribution": 80272929}
+      , {"rank": 20, "name": "Atelier", "contribution": 79019826}
+      , {"rank": 21, "name": "Broke", "contribution": 75775892}
+      , {"rank": 22, "name": "Sora", "contribution": 75631668}
+      , {"rank": 23, "name": "Tama", "contribution": 74979459}
+      , {"rank": 24, "name": "Lithe", "contribution": 69131473}
+      , {"rank": 25, "name": "Oceania", "contribution": 69012616}
+      , {"rank": 26, "name": "Revive", "contribution": 68318091}
+      , {"rank": 27, "name": "Rising", "contribution": 64206429}
+      , {"rank": 28, "name": "Ravers", "contribution": 62783449}
+      , {"rank": 29, "name": "Sugar", "contribution": 62760688}
+      , {"rank": 30, "name": "Artifacts", "contribution": 61609928}
+      , {"rank": 31, "name": "Fabled", "contribution": 56077460}
+      , {"rank": 32, "name": "Aloe", "contribution": 55086052}
+      , {"rank": 33, "name": "Earnest", "contribution": 54168958}
+      , {"rank": 34, "name": "Skyfall", "contribution": 51007455}
+      , {"rank": 35, "name": "CyberThreat", "contribution": 49821525}
+      , {"rank": 36, "name": "Mystical", "contribution": 49764060}
+      , {"rank": 37, "name": "chigga", "contribution": 48676027}
+      , {"rank": 38, "name": "Fandom", "contribution": 47515495}
+      , {"rank": 39, "name": "Howl", "contribution": 46461256}
+      , {"rank": 40, "name": "RainDrop", "contribution": 45174624}
+      , {"rank": 41, "name": "Path", "contribution": 44934426}
+      , {"rank": 42, "name": "Bubbles", "contribution": 42810639}
+      , {"rank": 43, "name": "Coffee", "contribution": 42294515}
+      , {"rank": 44, "name": "Weibo", "contribution": 41908988}
+      , {"rank": 45, "name": "Kingdom", "contribution": 41757438}
+      , {"rank": 46, "name": "Exorcist", "contribution": 41161676}
+      , {"rank": 47, "name": "Reboot", "contribution": 40474527}
+      , {"rank": 48, "name": "Comity", "contribution": 40296928}
+      , {"rank": 49, "name": "Faction", "contribution": 39639099}
+      , {"rank": 50, "name": "HeavenSent", "contribution": 37046670}
     ]
-    
+
   }
 }
