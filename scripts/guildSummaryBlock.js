@@ -199,7 +199,10 @@ function generateGuildComparisonHtmlSubBlock(guildSummaryResult1, guildSummaryRe
       <div style="padding: 5px 0px 0px 0px;"></div>
       ${getFormattedGuildNameHtml(guildSummaryResult1)} is 
     `;
-    if (daysUntilIntersect < 0)
+    // daysUntilIntersect can be 0, meaning daysUntilIntersect before Math.ceil is like -0.75 but after Math.ceil is 0.
+    // This situation happened on 04 Jan 2020 for Elite-Bounce, when Bounce overtook Elite and Elite trends showed: "Elite is estimated to overtake Bounce in 0 days on [04 Jan 2020]."
+    // daysUntilIntersect = Math.ceil((205740176 - 205576171) / (68846.83870967742 - 286476.3548387097)) = 0
+    if (daysUntilIntersect <= 0)
     {
       blockContentHtml += `
         <u>not</u> estimated to overtake ${getFormattedGuildNameHtml(guildSummaryResult2)}.
