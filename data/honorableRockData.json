@@ -321,6 +321,59 @@
       , {"rank": 48, "name": "Comity", "contribution": 40296928}
       , {"rank": 49, "name": "Faction", "contribution": 39639099}
       , {"rank": 50, "name": "HeavenSent", "contribution": 37046670}
+    ],
+    "January 2020":
+    [
+      {"rank": 1, "name": "Eternal", "contribution": 243043578}
+      , {"rank": 2, "name": "Smile", "contribution": 237838196}
+      , {"rank": 3, "name": "Savages", "contribution": 228672705}
+      , {"rank": 4, "name": "Bounce", "contribution": 212909088}
+      , {"rank": 5, "name": "Elite", "contribution": 207527311}
+      , {"rank": 6, "name": "Spring", "contribution": 147106317}
+      , {"rank": 7, "name": "Sunset", "contribution": 138924603}
+      , {"rank": 8, "name": "Epic", "contribution": 133258625}
+      , {"rank": 9, "name": "Beaters", "contribution": 125747064}
+      , {"rank": 10, "name": "Downtime", "contribution": 120319160}
+      , {"rank": 11, "name": "lolicafe", "contribution": 102061033}
+      , {"rank": 12, "name": "RainSong", "contribution": 99680946}
+      , {"rank": 13, "name": "Imperium", "contribution": 99350578}
+      , {"rank": 14, "name": "Remorse", "contribution": 89190116}
+      , {"rank": 15, "name": "Undertale", "contribution": 88305254}
+      , {"rank": 16, "name": "Gintama", "contribution": 87768163}
+      , {"rank": 17, "name": "Maha", "contribution": 84739973}
+      , {"rank": 18, "name": "Erda", "contribution": 84517975}
+      , {"rank": 19, "name": "Cleanse", "contribution": 82608759}
+      , {"rank": 20, "name": "Tama", "contribution": 79091632}
+      , {"rank": 21, "name": "Broke", "contribution": 78951041}
+      , {"rank": 22, "name": "Atelier", "contribution": 78316757}
+      , {"rank": 23, "name": "Sora", "contribution": 75722680}
+      , {"rank": 24, "name": "Lithe", "contribution": 73552585}
+      , {"rank": 25, "name": "Revive", "contribution": 73029232}
+      , {"rank": 26, "name": "Oceania", "contribution": 68152097}
+      , {"rank": 27, "name": "Rising", "contribution": 65628617}
+      , {"rank": 28, "name": "Sugar", "contribution": 63988479}
+      , {"rank": 29, "name": "Ravers", "contribution": 63310658}
+      , {"rank": 30, "name": "Artifacts", "contribution": 61627857}
+      , {"rank": 31, "name": "Fabled", "contribution": 56716634}
+      , {"rank": 32, "name": "Earnest", "contribution": 56608216}
+      , {"rank": 33, "name": "Aloe", "contribution": 56444050}
+      , {"rank": 34, "name": "Skyfall", "contribution": 52169401}
+      , {"rank": 35, "name": "Mystical", "contribution": 50864570}
+      , {"rank": 36, "name": "CyberThreat", "contribution": 50519707}
+      , {"rank": 37, "name": "Howl", "contribution": 50488967}
+      , {"rank": 38, "name": "Fandom", "contribution": 47991738}
+      , {"rank": 39, "name": "chigga", "contribution": 47869266}
+      , {"rank": 40, "name": "RainDrop", "contribution": 46745943}
+      , {"rank": 41, "name": "Path", "contribution": 45219390}
+      , {"rank": 42, "name": "Kingdom", "contribution": 45107275}
+      , {"rank": 43, "name": "Exorcist", "contribution": 42688203}
+      , {"rank": 44, "name": "Bubbles", "contribution": 42478754}
+      , {"rank": 45, "name": "Coffee", "contribution": 41798171}
+      , {"rank": 46, "name": "Weibo", "contribution": 40867146}
+      , {"rank": 47, "name": "Faction", "contribution": 40254536}
+      , {"rank": 48, "name": "Reboot", "contribution": 39616142}
+      , {"rank": 49, "name": "HeavenSent", "contribution": 39129544}
+      , {"rank": 50, "name": "Comity", "contribution": 39056996}
     ]
 
   }
