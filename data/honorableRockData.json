@@ -57,7 +57,8 @@
     {"name": "Gentle", "backgroundColor": "#CCAAFF", "iconFilename": "Gentle.png"},
     {"name": "Nutsy", "backgroundColor": "#FFBB55", "iconFilename": "Nutsy.png"},
     {"name": "Miao", "backgroundColor": "#EFEFEF", "iconFilename": "Miao.png"},
-    {"name": "SlimeTree", "backgroundColor": "#CDFF76", "iconFilename": "SlimeTree.png"}
+    {"name": "SlimeTree", "backgroundColor": "#CDFF76", "iconFilename": "SlimeTree.png"},
+    {"name": "Supahot", "backgroundColor": "#FFC4F0", "iconFilename": "Supahot.png"}
   ],
   "monthlyEntries":
   {
@@ -537,6 +538,59 @@
       , {"rank": 48, "name": "Comity", "contribution": 39916833}
       , {"rank": 49, "name": "Gentle", "contribution": 39185113}
       , {"rank": 50, "name": "SlimeTree", "contribution": 38860946}
+    ],
+    "May 2020":
+    [
+      {"rank": 1, "name": "Savages", "contribution": 269596089}
+      , {"rank": 2, "name": "Smile", "contribution": 267669855}
+      , {"rank": 3, "name": "Eternal", "contribution": 259710759}
+      , {"rank": 4, "name": "Bounce", "contribution": 239326724}
+      , {"rank": 5, "name": "Elite", "contribution": 208546754}
+      , {"rank": 6, "name": "Spring", "contribution": 151062021}
+      , {"rank": 7, "name": "Epic", "contribution": 150511738}
+      , {"rank": 8, "name": "Sunset", "contribution": 147134279}
+      , {"rank": 9, "name": "Beaters", "contribution": 137104314}
+      , {"rank": 10, "name": "Downtime", "contribution": 125989790}
+      , {"rank": 11, "name": "lolicafe", "contribution": 111242227}
+      , {"rank": 12, "name": "Imperium", "contribution": 106048719}
+      , {"rank": 13, "name": "Remorse", "contribution": 99620457}
+      , {"rank": 14, "name": "Revive", "contribution": 96167171}
+      , {"rank": 15, "name": "Cleanse", "contribution": 94661918}
+      , {"rank": 16, "name": "Maha", "contribution": 93179716}
+      , {"rank": 17, "name": "Gintama", "contribution": 92515414}
+      , {"rank": 18, "name": "Lithe", "contribution": 90930849}
+      , {"rank": 19, "name": "Undertale", "contribution": 89532722}
+      , {"rank": 20, "name": "RainSong", "contribution": 87759532}
+      , {"rank": 21, "name": "Broke", "contribution": 86226610}
+      , {"rank": 22, "name": "Erda", "contribution": 85486323}
+      , {"rank": 23, "name": "Sora", "contribution": 80366976}
+      , {"rank": 24, "name": "Sugar", "contribution": 71508173}
+      , {"rank": 25, "name": "Rising", "contribution": 69473960}
+      , {"rank": 26, "name": "Earnest", "contribution": 64630310}
+      , {"rank": 27, "name": "Aloe", "contribution": 63263190}
+      , {"rank": 28, "name": "Howl", "contribution": 63190342}
+      , {"rank": 29, "name": "Oceania", "contribution": 62327891}
+      , {"rank": 30, "name": "Ravers", "contribution": 61025622}
+      , {"rank": 31, "name": "Fabled", "contribution": 57941186}
+      , {"rank": 32, "name": "Mystical", "contribution": 57268486}
+      , {"rank": 33, "name": "RainDrop", "contribution": 55118248}
+      , {"rank": 34, "name": "Atelier", "contribution": 51024516}
+      , {"rank": 35, "name": "Exorcist", "contribution": 49167200}
+      , {"rank": 36, "name": "Nutsy", "contribution": 48971834}
+      , {"rank": 37, "name": "Kingdom", "contribution": 48553741}
+      , {"rank": 38, "name": "Path", "contribution": 46873503}
+      , {"rank": 39, "name": "Tama", "contribution": 46409016}
+      , {"rank": 40, "name": "CyberThreat", "contribution": 45954662}
+      , {"rank": 41, "name": "Fandom", "contribution": 44791209}
+      , {"rank": 42, "name": "Miao", "contribution": 44427832}
+      , {"rank": 43, "name": "Weibo", "contribution": 43921823}
+      , {"rank": 44, "name": "Bubbles", "contribution": 41345760}
+      , {"rank": 45, "name": "Reboot", "contribution": 41174173}
+      , {"rank": 46, "name": "Comity", "contribution": 40557398}
+      , {"rank": 47, "name": "Supahot", "contribution": 40498998}
+      , {"rank": 48, "name": "Faction", "contribution": 39836403}
+      , {"rank": 49, "name": "Artifacts", "contribution": 39468858}
+      , {"rank": 50, "name": "chigga", "contribution": 39158297}
     ]
 
   }
