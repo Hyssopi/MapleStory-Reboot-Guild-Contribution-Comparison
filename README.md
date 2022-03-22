@@ -3,7 +3,10 @@ Interactive visualization and comparison of the top MapleStory Reboot Guilds. Di
 
 ![splash](images/splash.png)
 
-## GitHub Pages
+## Working Demo
+https://www.youtube.com/watch?v=LYOzIMXCGh8
+
+## Try It Out
 https://hyssopi.github.io/MapleStory-Reboot-Guild-Contribution-Comparison/
 
 ## Prerequisites
